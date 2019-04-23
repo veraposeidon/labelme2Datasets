@@ -12,6 +12,3 @@ def en_cn_dict_build(file_name):
 
     return cn_ens, en_cns
 
-
-if __name__ == '__main__':
-    en_cn_dict_build('瑕疵中英文名.txt')

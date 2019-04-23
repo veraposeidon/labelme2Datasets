@@ -24,11 +24,19 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # labels file
     parser.add_argument('labels_file')
+    # en-cn file
+    parser.add_argument('en_cn_file')
     # directory where contains labelme annotated json files
     parser.add_argument('in_dir', help='input dir with annotated files')
     # output directory for dataset
     parser.add_argument('out_dir', help='output dataset directory')
     args = parser.parse_args()
+
+    # build a chinese-english label convert dict
+    (cn2ens, en2cns) = en_cn_dict_build(args.en_cn_file)
+
+    # regex pattern(used in get image name)
+    pattern = re.compile(r"\d+")  # e.g. use time as file name
 
     # 1. Create Directories
     # remove output dir manually when exists
@@ -184,11 +192,6 @@ def main():
 
 
 if __name__ == '__main__':
-    # build a chinese-english label convert dict
-    (cn2ens, en2cns) = en_cn_dict_build('瑕疵中英文名.txt')
-
-    # regex pattern(used in get image name)
-    pattern = re.compile(r"\d+")  # e.g. use time as file name
 
     # begin
     main()
