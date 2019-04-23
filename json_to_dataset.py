@@ -6,13 +6,12 @@ import os.path as osp
 import warnings
 
 import PIL.Image
-import yaml
-
 from labelme import utils
 
 
-# 操作Labelme的Json文件，分别转换为原图、Mask图、可视化图、label_names.txt
-# 使用方式：python json_to_dataset.py wait4process.json -o resultdir
+# convert single json file to single image dataset.
+# Json -> (src img, masked img, visualized img, label_names.txt)
+# usage：python json_to_dataset.py wait4process.json -o resultdir
 def main():
     warnings.warn("This script is aimed to demonstrate how to convert the JSON file to a single image dataset, \n"
                   "and not to handle multiple JSON files to generate a real-use dataset.")
