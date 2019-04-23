@@ -1,3 +1,4 @@
+import argparse
 import os
 import xmltodict
 import json
@@ -16,16 +17,15 @@ def voc_xml2coco_json(root_dir, xml_files, json_file):
     # categories info
     # (add manually for now. If label num is large, you can write a script to generate this with class_names.txt)
     attr_dict["categories"] = [{"supercategory": "defect", "id": 1, "name": "BuDaoDian"},
-                              {"supercategory": "defect", "id": 2, "name": "CaHua"},
-                              {"supercategory": "defect", "id": 3, "name": "JiaoWeiLouDi"},
-                              {"supercategory": "defect", "id": 4, "name": "JuPi"},
-                              {"supercategory": "defect", "id": 5, "name": "LouDi"},
-                              {"supercategory": "defect", "id": 6, "name": "PengLiu"},
-                              {"supercategory": "defect", "id": 7, "name": "QiPao"},
-                              {"supercategory": "defect", "id": 8, "name": "QiKeng"},
-                              {"supercategory": "defect", "id": 9, "name": "ZaSe"},
-                              {"supercategory": "defect", "id": 10, "name": "ZangDian"}
-                              ]
+                               {"supercategory": "defect", "id": 2, "name": "CaHua"},
+                               {"supercategory": "defect", "id": 3, "name": "JiaoWeiLouDi"},
+                               {"supercategory": "defect", "id": 4, "name": "JuPi"},
+                               {"supercategory": "defect", "id": 5, "name": "LouDi"},
+                               {"supercategory": "defect", "id": 6, "name": "PengLiu"},
+                               {"supercategory": "defect", "id": 7, "name": "QiPao"},
+                               {"supercategory": "defect", "id": 8, "name": "QiKeng"},
+                               {"supercategory": "defect", "id": 9, "name": "ZaSe"},
+                               {"supercategory": "defect", "id": 10, "name": "ZangDian"}]
     # image list
     images = list()
     # annotation list
@@ -33,7 +33,7 @@ def voc_xml2coco_json(root_dir, xml_files, json_file):
     for root, dirs, files in os.walk(root_dir):
         image_id = 0
         for file in xml_files:
-            image_id = image_id + 1     # define image id by plus 1, in case of duplicate
+            image_id = image_id + 1  # define image id by plus 1, in case of duplicate
             if file in files:
                 # xml path
                 annotation_path = os.path.abspath(os.path.join(root, file))
@@ -76,7 +76,8 @@ def voc_xml2coco_json(root_dir, xml_files, json_file):
                                 annotation["area"] = float(w * h)
                                 annotation["category_id"] = value["id"]
                                 annotation["ignore"] = 0
-                                annotation["segmentation"] = [[x, y, x, (y + h - 1), (x + w - 1), (y + h - 1), (x + w - 1), y]]
+                                annotation["segmentation"] = [
+                                    [x, y, x, (y + h - 1), (x + w - 1), (y + h - 1), (x + w - 1), y]]
                                 annotation["id"] = id1
                                 id1 += 1
 
@@ -102,23 +103,27 @@ def voc_xml2coco_json(root_dir, xml_files, json_file):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # voc image-set file
-    File = "E:/Documents/Datasets/AluminiumVOC/ImageSets/Main/test.txt"
-    # annotation dir
-    rootDir = "E:/Documents/Datasets/AluminiumVOC/Annotations"
-    # out put json file
-    jsonFile = "E:/Documents/Datasets/AluminiumVOC/Annotations/data_test2018.json"
+    parser.add_argument('imgset_file', help='voc image set to convert')
+    # directory where contains labelme annotated json files
+    parser.add_argument('anno_dir', help='voc dataset annotations directory')
+    # output directory for dataset
+    parser.add_argument('json_file', help='output coco json file')
+    args = parser.parse_args()
 
     # get xml list
-    XMLFiles = list()
-    with open(File, "r", encoding='UTF-8') as f:
+    xml_list = list()
+    with open(args.imgset_file, "r", encoding='UTF-8') as f:
         for line in f:
             fileName = line.strip()
             print(fileName)
             print(fileName)
-            XMLFiles.append(fileName + ".xml")
+            xml_list.append(fileName + ".xml")
     # auto-remove file when it exist
-    if os.path.exists(jsonFile):
-        os.remove(jsonFile)
+    if os.path.exists(args.json_file):
+        os.remove(args.json_file)
+
     # begin convert
-    voc_xml2coco_json(rootDir, XMLFiles, jsonFile)
+    voc_xml2coco_json(args.anno_dir, xml_list, args.json_file)
