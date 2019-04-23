@@ -80,6 +80,7 @@ def main():
         # 此处用json自带的图像数据来保存图像
         imageData = data['imageData']
         img = utils.img_b64_to_arr(imageData)
+
         # img_file = osp.join(osp.dirname(label_file), data['imagePath'])
         # img = np.asarray(PIL.Image.open(img_file))
 
@@ -88,17 +89,19 @@ def main():
 
         maker = lxml.builder.ElementMaker()
         xml = maker.annotation(
-            maker.folder(),
-            maker.filename(base + '.jpg'),
-            maker.database(),    # e.g., The VOC2007 Database
-            maker.annotation(),  # e.g., Pascal VOC2007
-            maker.image(),       # e.g., flickr
-            maker.size(
+            maker.folder(""),                   # 文件夹
+            maker.filename(base + '.jpg'),      # 文件名
+            maker.source(                       # 图像来源
+                maker.database(""),
+                maker.annotation(""),
+                maker.image(""),
+            ),
+            maker.size(                         # 图像尺寸（长宽以及通道数）
                 maker.height(str(img.shape[0])),
                 maker.width(str(img.shape[1])),
                 maker.depth(str(img.shape[2])),
             ),
-            maker.segmented(),
+            maker.segmented("0"),               # 是否用于分割
         )
 
         bboxes = []
@@ -122,12 +125,12 @@ def main():
             labels.append(class_id)
 
             xml.append(
-                maker.object(
-                    maker.name(cn2ens[shape['label']]),  # 此处要改成英文的
-                    maker.pose(),
-                    maker.truncated(),
-                    maker.difficult(),
-                    maker.bndbox(
+                maker.object(                               # 目标对象
+                    maker.name(cn2ens[shape['label']]),     # 分类
+                    maker.pose(""),                         # 拍摄角度
+                    maker.truncated("0"),                   # 是否截断
+                    maker.difficult("0"),                   # 识别难度
+                    maker.bndbox(                           # bbox左上角和右下角xy坐标
                         maker.xmin(str(xmin)),
                         maker.ymin(str(ymin)),
                         maker.xmax(str(xmax)),
@@ -141,7 +144,6 @@ def main():
             img, bboxes, labels, captions=captions
         )
         PIL.Image.fromarray(viz).save(out_viz_file)
-
 
         # 另一种可视化方式，每种缺陷一种颜色
         label_name_to_value = {'背景': 0}
@@ -167,7 +169,7 @@ def main():
 if __name__ == '__main__':
     (cn2ens, en2cns) = en_cn_dict_build('瑕疵中英文名.txt')
 
-    ## TODO: 正则表达式处理json的文件名，结果作为图像和标注文件名。
+    # 正则表达式处理json的文件名，结果作为图像和标注文件名
     pattern = re.compile(r"\d+")    # e.g. 用时间作为文件名
 
     main()
