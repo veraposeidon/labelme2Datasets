@@ -16,7 +16,7 @@ import PIL.Image
 
 import labelme
 from labelme import utils
-from buildNameDict import en_cn_dict_build  # convert chinese label to english label
+from labels_cn_en import en_cn_dict_build  # convert chinese label to english label
 
 
 def main():
