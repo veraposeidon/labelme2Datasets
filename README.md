@@ -50,6 +50,7 @@ other tools:
 ```bash
 conda install scikit-learn  # used to split train set and test set 
 pip install xmltodict
+pip install progressbar2    # for progress visualize
 ```
 
 ## USAGE
