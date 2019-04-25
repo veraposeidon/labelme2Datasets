@@ -6,7 +6,6 @@ from __future__ import print_function
 import re
 
 from pathlib import Path
-
 from PIL import Image
 import lxml.builder
 import lxml.etree
@@ -15,6 +14,11 @@ import progressbar
 
 from labels_cn_en import en_cn_dict_build  # convert chinese label to english label
 
+# configuration for big image
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+
 # build a chinese-english label convert dict
 (cn2ens, en2cns) = en_cn_dict_build("瑕疵中英文名.txt")
 
@@ -22,7 +26,7 @@ from labels_cn_en import en_cn_dict_build  # convert chinese label to english la
 src_dir = Path("E:/Documents/Datasets/AluminiumClassification/select_defect")
 
 # 输出文件夹
-output_dir = Path("E:/Documents/Datasets/AluminiumClassification/multilabedataset")
+output_dir = Path("E:/Documents/Datasets/AluminiumClassification/multilabeldataset")
 
 # regex：中文标签
 cn_pattern = re.compile(r"^([^a-zA-Z0-9]+)")
