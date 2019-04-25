@@ -62,7 +62,7 @@ for english name in labelme annotation, fill english name both in first column a
 
 ### step2：convert labelme jsons to voc style datasets
 
-`python labelme2voc.py labels_file=label_names.txt en_cn_file=瑕疵中英文名.txt in_dir=labelme_jsonfiles_dir out_dir=outputVOCdir`
+`python labelme2voc.py labels_file en_cn_file in_dir out_dir `
 
 - labels_file: label_names.txt
 - en_cn_file: cn-en table file
@@ -71,7 +71,7 @@ for english name in labelme annotation, fill english name both in first column a
 
 ### step3: split datasets to train set and test set
 
-`python split_dataset.py voc_dir=outputVOCdir test_ratio=0.3`
+`python split_dataset.py voc_dir test_ratio`
 
 - voc_dir: VOC format dataset directory
 - test_ratio: test set ratio in whole dataset
@@ -80,7 +80,7 @@ this automatically generate train.txt and test.txt
 
 ### step4: convert voc style datasets to coco style datasets
 
-`python voc_xml2coco_json.py imgset_file=train.txt anno_dir=VOCdir_annoDir json_file=coco.json `
+`python voc_xml2coco_json.py imgset_file anno_dir json_file `
 
 - imgset_file: image set file path. (Use train.txt or test.txt generated last step)
 - anno_dir: directory contains voc dataset xml format annotations. (usually in VOC/Annotations)

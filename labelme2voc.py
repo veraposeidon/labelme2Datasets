@@ -13,7 +13,7 @@ import re
 import lxml.builder
 import lxml.etree
 import PIL.Image
-
+import progressbar
 import labelme
 from labelme import utils
 from labels_cn_en import en_cn_dict_build  # convert chinese label to english label
@@ -72,9 +72,11 @@ def main():
     print('Saved class_names:', out_class_names_file)
 
     # 3. Process Every Json File
-    for label_file in glob.glob(osp.join(args.in_dir, '*.json')):
+    label_file_list = glob.glob(osp.join(args.in_dir, '*.json'))
+    for i in progressbar.progressbar(range(len(label_file_list))):
+        label_file = label_file_list[i]
         # load json
-        print('Generating dataset from:', label_file)
+        # print('Generating dataset from:', label_file)
         with open(label_file, 'r', encoding='UTF-8') as f:
             data = json.load(f)
 

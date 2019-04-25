@@ -47,14 +47,14 @@ if __name__ == '__main__':
     VOC_dir = args.voc_dir
 
     # default position
-    annotationXmlDir = VOC_dir + "Annotations/"
+    annotationXmlDir = VOC_dir + "/Annotations/"
 
     # default position
-    outputDir = VOC_dir + "ImageSets/Main/"
+    outputDir = VOC_dir + "/ImageSets/Main/"
 
     # two split image set file name e.g. train.txt and test.txt
     train_file = outputDir + "train.txt"
     test_file = outputDir + "test.txt"
 
     # split xml to two image set file
-    split_to_train_test(annotationXmlDir, train_file, test_file, split_ratio=args.test_ratio)
+    split_to_train_test(annotationXmlDir, train_file, test_file, split_ratio=(float)(args.test_ratio))
