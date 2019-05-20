@@ -57,4 +57,4 @@ if __name__ == '__main__':
     test_file = outputDir + "test.txt"
 
     # split xml to two image set file
-    split_to_train_test(annotationXmlDir, train_file, test_file, split_ratio=(float)(args.test_ratio))
+    split_to_train_test(annotationXmlDir, train_file, test_file, split_ratio=float(args.test_ratio))

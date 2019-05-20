@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# 参考来源：labelme examples
+# 参考来源：labelme examples: bbox detection
 # 简介：labelme 标注完一份图像之后得到Json文件，收集该Json文件至一个文件夹，使用本程序转换为VOC格式的数据集。
 from __future__ import print_function
 

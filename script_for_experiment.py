@@ -1,3 +1,4 @@
+# 脚本 备忘
 from pathlib import Path
 clsdir = Path("E:/Documents/Datasets/AluminumVOC/Backup/multilabelclassification")
 allclsfiles = clsdir.glob("*.xml")
