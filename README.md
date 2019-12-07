@@ -27,19 +27,31 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
 
 - `labelme_json_to_dataset.py`: 演示如何将单个labelme标注的json文件转换为单张图像的数据集。
 
-  **usage:**  `python labelme_json_to_dataset.py test/test_single.json -o test/test_single`
-- labels_cn_en.py: build dictionary for label's chinese name and english name.  (for people use english name in datasets while annotating other language in labelme)
-- labelme2voc.py: convert a batch of labelme json files to voc format dataset.
+  **用法**  `python labelme_json_to_dataset.py [-h] [-o OUT] json_file`
+
+  **举例**  `python labelme_json_to_dataset.py test/test_single.json -o test/test_single`
+
+- `utils.py`: 内置一些简单的转换函数。
+
+- `bbox_labelme2voc.py`: 批量处理labelme标注的json文件，转换成VOC格式的数据集。
+
+  **用法** `python bbox_labelme2voc.py [-h] --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
+
+  **举例** 
+
 - split_dataset.py：split voc annotation files into train set and test set.
+
 - voc_xml2coco_json.py：convert voc format dataset to coco format dataset, which is a json file.
+
 - label_names.txt：label names annotated with Labelme tool. important file for later convert.
+
 - 瑕疵中英文名.txt：label name comparison in chinese and english. you can change this file for your task.
 
 ## 安装
 
 labelme environment:  [from labelme repo](https://github.com/wkentaro/labelme#anaconda) 
 ```bash
-# python3
+	# python3
 conda create --name=labelme python=3.6
 source activate labelme
 # conda install -c conda-forge pyside2

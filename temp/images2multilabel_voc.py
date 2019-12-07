@@ -12,7 +12,7 @@ import lxml.etree
 import numpy as np
 import progressbar
 
-from temp.labels_cn_en import en_cn_dict_build  # convert chinese label to english label
+from utils import en_cn_dict_build  # convert chinese label to english label
 
 # configuration for big image
 from PIL import ImageFile
@@ -20,7 +20,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 # build a chinese-english label convert dict
-(cn2ens, en2cns) = en_cn_dict_build("瑕疵中英文名.txt")
+(cn2ens, en2cns) = en_cn_dict_build("瑕疵中英文-Dict.txt")
 
 # 多标签缺陷图像
 src_dir = Path("E:/Documents/Datasets/AluminiumClassification/select_defect")

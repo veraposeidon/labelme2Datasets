@@ -1,3 +1,4 @@
+_background_,_background_
 不导电,BuDaoDian
 擦花,CaHua
 角位漏底,JiaoWeiLouDi
@@ -5,11 +6,6 @@
 漏底,LouDi
 喷流,PengLiu
 漆泡,QiPao
-气泡,QiPao
 起坑,QiKeng
 杂色,ZaSe
 脏点,ZangDian
-打白点,ZangDian
-铝屑,ZangDian
-油渣,ZangDian
-背景,_background_

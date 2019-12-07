@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# 参考来源：labelme examples: bbox detection
-# 简介：labelme 标注完一份图像之后得到Json文件，收集该Json文件至一个文件夹，使用本程序转换为VOC格式的数据集。
 from __future__ import print_function
 
 import argparse
@@ -9,51 +7,54 @@ import json
 import os
 import os.path as osp
 import re
+import sys
 
-import lxml.builder
-import lxml.etree
+try:
+    import lxml.builder
+    import lxml.etree
+except ImportError:
+    print('Please install lxml:\n\n    pip install lxml\n')
+    sys.exit(1)
+
+import numpy as np
 import PIL.Image
 import progressbar
 import labelme
 from labelme import utils
-from temp.labels_cn_en import en_cn_dict_build  # convert chinese label to english label
+from utils import label_name_convert_dict_build
+
+# regex for get base name
+pattern = re.compile(r"\d+")  # e.g. '擦花20180830172530对照样本.jpg' -> '20180830172530'
 
 
+# labelme 标注完一份图像之后得到Json文件，收集该Json文件至一个文件夹，使用本程序转换为VOC格式的数据集。
+# reference: https://github.com/wkentaro/labelme/blob/master/examples/bbox_detection/labelme2voc.py
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    # labels file
-    parser.add_argument('labels_file')
-    # en-cn file
-    parser.add_argument('en_cn_file')
-    # directory where contains labelme annotated json files
-    parser.add_argument('in_dir', help='input dir with annotated files')
-    # output directory for dataset
-    parser.add_argument('out_dir', help='output dataset directory')
+    parser.add_argument('input_dir', help='input annotated directory')
+    parser.add_argument('output_dir', help='output dataset directory')
+    parser.add_argument('--labels', help='labels file', required=True)
+    parser.add_argument('--label_dict', help='convert label with dict')
     args = parser.parse_args()
 
-    # build a chinese-english label convert dict
-    (cn2ens, en2cns) = en_cn_dict_build(args.en_cn_file)
-
-    # regex pattern(used in get image name)
-    pattern = re.compile(r"\d+")  # e.g. use time as file name
-
-    # 1. Create Directories
-    # remove output dir manually when exists
-    if osp.exists(args.out_dir):
-        print('Output directory already exists:', args.out_dir)
-        quit(1)
     # make voc format directories
-    os.makedirs(args.out_dir)
-    os.makedirs(osp.join(args.out_dir, 'JPEGImages'))
-    os.makedirs(osp.join(args.out_dir, 'Annotations'))
-    os.makedirs(osp.join(args.out_dir, 'AnnotationsVisualization'))
-    print('dataset dir is:', args.out_dir)
+    if osp.exists(args.output_dir):
+        print('Output directory already exists:', args.output_dir)
+        sys.exit(1)
+    os.makedirs(args.output_dir)
+    os.makedirs(osp.join(args.output_dir, 'JPEGImages'))
+    os.makedirs(osp.join(args.output_dir, 'Annotations'))
+    os.makedirs(osp.join(args.output_dir, 'AnnotationsVisualization'))
+    print('Creating dataset:', args.output_dir)
 
-    # 2. Get Label Information
+    # build convert dict
+    if args.label_dict is not None:
+        fst2snd_dict = label_name_convert_dict_build(args.label_dict)
+
     # get labels and save it to dataset dir
     class_names = []
-    for i, line in enumerate(open(args.labels_file, 'r', encoding='UTF-8').readlines()):
+    for i, line in enumerate(open(args.labels, 'r', encoding='UTF-8').readlines()):
         class_id = i - 1  # starts with -1
         class_name = line.strip()
         if class_id == -1:
@@ -61,61 +62,60 @@ def main():
             continue
         elif class_id == 0:
             assert class_name == '_background_'
-            class_names.append(class_name)
-        else:
-            class_names.append(cn2ens[class_name])
+
+        if args.label_dict is not None:
+            class_name = fst2snd_dict[class_name]
+        class_names.append(class_name)
     class_names = tuple(class_names)
     print('class_names:', class_names)
-    out_class_names_file = osp.join(args.out_dir, 'class_names.txt')  # save labels in txt for information
+    out_class_names_file = osp.join(args.output_dir, 'class_names.txt')  # save labels in txt for information
     with open(out_class_names_file, 'w', encoding='UTF-8') as f:
         f.writelines('\n'.join(class_names))
     print('Saved class_names:', out_class_names_file)
 
-    # 3. Process Every Json File
-    label_file_list = glob.glob(osp.join(args.in_dir, '*.json'))
+    label_file_list = glob.glob(osp.join(args.input_dir, '*.json'))
     for i in progressbar.progressbar(range(len(label_file_list))):
         label_file = label_file_list[i]
-        # load json
         # print('Generating dataset from:', label_file)
         with open(label_file, 'r', encoding='UTF-8') as f:
             data = json.load(f)
 
-        # regex get img name
+        # regex: get image name
+        # base = osp.splitext(osp.basename(label_file))[0]
         filename = osp.splitext(osp.basename(label_file))[0]
-        base = pattern.findall(filename)[0]
+        base = pattern.findall(filename)[0]     # TODO: you can change it here: design a method for sample name
 
         # src image file
         out_img_file = osp.join(
-            args.out_dir, 'JPEGImages', base + '.jpg')
+            args.output_dir, 'JPEGImages', base + '.jpg')
         # annotation xml file
         out_xml_file = osp.join(
-            args.out_dir, 'Annotations', base + '.xml')
+            args.output_dir, 'Annotations', base + '.xml')
         # visualize image file
         out_viz_file = osp.join(
-            args.out_dir, 'AnnotationsVisualization', base + '_Viz.jpg')
+            args.output_dir, 'AnnotationsVisualization', base + '.jpg')
         # color annotated image file
         out_colorize_file = osp.join(
-            args.out_dir, 'AnnotationsVisualization', base + '_ColorViz.jpg')
+            args.output_dir, 'AnnotationsVisualization', base + '_viz.jpg')
 
-        # labelme annotated file contains source image data(serialized)
-        # get img data as numpy array
-        imgdata = data['imageData']
-        img = utils.img_b64_to_arr(imgdata)
-
-        # also you can read image from img path too
-        # img_file = osp.join(osp.dirname(label_file), data['imagePath'])
-        # img = np.asarray(PIL.Image.open(img_file))
-
-        # save the origin image file
+        # save source image
+        imageData = data.get('imageData')   # labelme annotated file contains source image data(serialized)
+        if imageData:
+            img = utils.img_b64_to_arr(imageData)
+        else:
+            img_file = osp.join(osp.dirname(label_file), data['imagePath'])
+            img = np.asarray(PIL.Image.open(img_file))
         PIL.Image.fromarray(img).save(out_img_file)
 
-        # lxml is a wonderful xml tool
         # generate voc format annotation file
         maker = lxml.builder.ElementMaker()
         xml = maker.annotation(
-            maker.folder(""),   # folder name
-            maker.filename(base + '.jpg'),  # img path
-            maker.source(  # img source, doesn't matter
+            # folder name
+            maker.folder(""),
+            # img path
+            maker.filename(base + '.jpg'),
+            # img source, ignore it
+            maker.source(
                 maker.database(""),
                 maker.annotation(""),
                 maker.image(""),
@@ -132,8 +132,12 @@ def main():
         bboxes = []
         labels = []
         for shape in data['shapes']:
+            # TODO: change it for annotation shape type, some use points, some use rectangle. Here shows the points one.
             class_name = shape['label']     # object name in json file
-            class_id = class_names.index(cn2ens[class_name])    # convert to class id
+            if args.label_dict is not None:
+                class_name = fst2snd_dict[class_name]
+
+            class_id = class_names.index(class_name)    # convert to class id
 
             # box info from annotated points
             xmin = shape['points'][0][0]
@@ -141,13 +145,16 @@ def main():
             xmax = shape['points'][2][0]
             ymax = shape['points'][2][1]
 
+            # swap if min is larger than max.
+            xmin, xmax = sorted([xmin, xmax])
+            ymin, ymax = sorted([ymin, ymax])
+
             bboxes.append([xmin, ymin, xmax, ymax])
             labels.append(class_id)
 
-            #
             xml.append(
                 maker.object(   # object info
-                    maker.name(cn2ens[shape['label']]),  # label name(in english)
+                    maker.name(class_name),  # label name
                     maker.pose(""),  # pose info, doesn't matter
                     maker.truncated("0"),  # truncated info, doesn't matter
                     maker.difficult("0"),  # diificulty, doesn't matter
@@ -165,27 +172,28 @@ def main():
         viz = labelme.utils.draw_instances(
             img, bboxes, labels, captions=captions
         )
-        # save it
+
         PIL.Image.fromarray(viz).save(out_viz_file)
 
         # another visualize format (colored mask in bbox)
-        # convert label to id
-        label_name_to_value = {'背景': 0}
+        label_name_to_value = {'_background_': 0}
         for shape in sorted(data['shapes'], key=lambda x: x['label']):
             label_name = shape['label']
+
             if label_name in label_name_to_value:
                 label_value = label_name_to_value[label_name]
             else:
                 label_value = len(label_name_to_value)
                 label_name_to_value[label_name] = label_value
-        # labelme's function
+
         lbl = utils.shapes_to_label(img.shape, data['shapes'], label_name_to_value)
         label_names = [None] * (max(label_name_to_value.values()) + 1)
         for name, value in label_name_to_value.items():
-            label_names[value] = cn2ens[name]  # annotated in english
-        # labelme's function
+            if args.label_dict is not None:
+                name = fst2snd_dict[name]
+            label_names[value] = name
+
         lbl_viz = utils.draw_label(lbl, img, label_names)
-        # save img
         PIL.Image.fromarray(lbl_viz).save(out_colorize_file)
 
         # save voc annotation to xml file
@@ -194,5 +202,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # begin
     main()
