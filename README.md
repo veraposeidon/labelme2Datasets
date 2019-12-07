@@ -1,31 +1,33 @@
-# Datasets Conversion：Labelme -> PascalVOC format -> MS COCO format
+<img src="logo.png" width="200" >
 
-## Annotation Tool and Two Common Dataset Format
+# 数据集转换脚本（工具向）
 
-Labelme is a common annotation tool.
+**News:** 最近开始论文实验，需要重新整理一下数据集，顺便整理一下这个代码仓库。
 
-It generate a json file for annotated image.
+## 简介
 
-This repo is aim to convert these json files to image dataset for CV deep learning.
-  
-For your information: 
+仓库中的脚本用于将Labelme标注的数据转换为PASCAL VOC格式或MS COCO格式的标准数据集，便于直接利用现有的训练框架进行训练。
+
+## 标注工具和常见的两种数据集格式
+
+Labelme是我用的标注工具，对图像进行多种类型的标注，可以直接得到`json`文件。GitHub地址如下：
 
 [labelme: Image Polygonal Annotation with Python](https://github.com/wkentaro/labelme)
 
-PASCAL-VOC and MS-COCO are two common open source image datasets.
+PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形式成为了通用的标注方式，常见的视觉模型的训练框架都支持这两种格式的读取，将自己的数据集转换为这两种标注方式，可以避免修改读取数据的代码。
 
-And are supported by most open source object detection algorithm or architecture. 
-
-For your information:
+两种数据集和标注格式的介绍：
 
 [目标检测数据集PASCAL VOC简介](https://arleyzhang.github.io/articles/1dc20586/)
 
 [目标检测数据集MSCOCO简介](https://arleyzhang.github.io/articles/e5b86f16/)
 
 
-## Python Tools in this Repo:
+## 仓库中的代码文件
 
-- json_to_dataset.py: demonstrate how to convert a single labelme json file to a single image dataset.
+- `labelme_json_to_dataset.py`: 演示如何将单个labelme标注的json文件转换为单张图像的数据集。
+
+  **usage:**  `python labelme_json_to_dataset.py test/test_single.json -o test/test_single`
 - labels_cn_en.py: build dictionary for label's chinese name and english name.  (for people use english name in datasets while annotating other language in labelme)
 - labelme2voc.py: convert a batch of labelme json files to voc format dataset.
 - split_dataset.py：split voc annotation files into train set and test set.
@@ -33,7 +35,7 @@ For your information:
 - label_names.txt：label names annotated with Labelme tool. important file for later convert.
 - 瑕疵中英文名.txt：label name comparison in chinese and english. you can change this file for your task.
 
-## Required Packages and Installation Guide
+## 安装
 
 labelme environment:  [from labelme repo](https://github.com/wkentaro/labelme#anaconda) 
 ```bash
@@ -52,6 +54,12 @@ conda install scikit-learn  # used to split train set and test set
 pip install xmltodict
 pip install progressbar2    # for progress visualize
 ```
+
+## 拓展
+
+仓库中的脚本只针对目前本人已有数据的转换，如果有实例分割、语义分割或视频标注等数据，可以参考labelme提供的示例代码进行修改，示例代码演示了这类标注文件如何转换成VOC格式数据集：
+
+https://github.com/wkentaro/labelme/tree/master/examples
 
 ## USAGE
 
