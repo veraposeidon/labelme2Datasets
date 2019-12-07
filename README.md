@@ -37,7 +37,7 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
 
   **用法** `python bbox_labelme2voc.py [-h] --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
 
-  **举例** 
+  **举例** `python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/瑕疵中英文-Dict.txt test/test_jsons test/test_voc`
 
 - split_dataset.py：split voc annotation files into train set and test set.
 
@@ -49,22 +49,20 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
 
 ## 安装
 
-labelme environment:  [from labelme repo](https://github.com/wkentaro/labelme#anaconda) 
+[labelme](https://github.com/wkentaro/labelme): 
+
 ```bash
-	# python3
+# python3
 conda create --name=labelme python=3.6
-source activate labelme
-# conda install -c conda-forge pyside2
-# conda install pyqt
-pip install pyqt5  # pyqt5 can be installed via pip on python3
-pip install labelme
+conda activate labelme
+conda install labelme
 ```
 
-other tools:
+其他工具：
 ```bash
-conda install scikit-learn  # used to split train set and test set 
-pip install xmltodict
-pip install progressbar2    # for progress visualize
+conda install progressbar2    # 进度条
+conda install scikit-learn  # 用于分割数据集 
+conda install xmltodict	
 ```
 
 ## 拓展
