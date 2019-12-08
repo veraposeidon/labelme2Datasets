@@ -35,7 +35,7 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
 
   **用法** `python bbox_labelme2voc.py [-h] --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
 
-  **举例** `python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/瑕疵中英文-Dict.txt test/test_jsons test/test_voc`
+  **举例** `python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/label_dict.txt test/test_jsons test/test_voc`
 
 - `split_dataset.py`：将VOC数据集中的样本按照比例，分割成训练集和测试集，并保存在`ImageSets/Main`文件夹下。
   
