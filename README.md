@@ -31,21 +31,19 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
 
   **举例**  `python labelme_json_to_dataset.py test/test_single.json -o test/test_single`
 
-- `utils.py`: 内置一些简单的转换函数。
-
 - `bbox_labelme2voc.py`: 批量处理labelme标注的json文件，转换成VOC格式的数据集。
 
   **用法** `python bbox_labelme2voc.py [-h] --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
 
   **举例** `python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/瑕疵中英文-Dict.txt test/test_jsons test/test_voc`
 
-- split_dataset.py：split voc annotation files into train set and test set.
+- `split_dataset.py`：将VOC数据集中的样本按照比例，分割成训练集和测试集，并保存在`ImageSets/Main`文件夹下。
+  **用法** `python split_dataset.py [-h] [--random_state RANDOM_STATE] voc_dir test_ratio`
+  **举例** `python split_dataset.py test/test_voc 0.35`
+
+- `utils.py`: 内置一些简单的转换函数。
 
 - voc_xml2coco_json.py：convert voc format dataset to coco format dataset, which is a json file.
-
-- label_names.txt：label names annotated with Labelme tool. important file for later convert.
-
-- 瑕疵中英文名.txt：label name comparison in chinese and english. you can change this file for your task.
 
 ## 安装
 
@@ -63,6 +61,7 @@ conda install labelme
 conda install progressbar2    # 进度条
 conda install scikit-learn  # 用于分割数据集 
 conda install xmltodict	
+conda install lxml
 ```
 
 ## 拓展
@@ -71,37 +70,29 @@ conda install xmltodict
 
 https://github.com/wkentaro/labelme/tree/master/examples
 
-## USAGE
+## 使用流程
 
-### step1: prepare label_names.txt and cn-to-en.txt(e.g. 瑕疵中英文名.txt)
+### 步骤一：使用Labelme标注数据集
 
-cn-to-en.txt(e.g. 瑕疵中英文名.txt) is required. 
-for english name in labelme annotation, fill english name both in first column and second column.
+- 标注得到一批json文件
+- 准备好`label_names.txt`，包含数据集的目标标签，可参考`test/label_names.txt`
+- 如果有需要进行标签名称转换的，准备好`label_dict.txt `，可参考`test/label_dict.txt`
 
-### step2：convert labelme jsons to voc style datasets
+### 步骤二：转换为VOC风格的数据集
 
-`python labelme2voc.py labels_file en_cn_file in_dir out_dir `
+`python bbox_labelme2voc.py --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
 
-- labels_file: label_names.txt
-- en_cn_file: cn-en table file
-- in_dir: directory contains labelme's json files
-- out_dir：output dir for voc format dataset
+- `LABELS`：`label_names.txt`
+- `LABEL_DICT`：`label_dict.txt`
+- `input_dir `：json标注文件所在文件夹
+- `output_dir`：VOC数据集文件夹
 
-### step3: split datasets to train set and test set
+### 步骤三：分割训练集和测试集
 
-`python split_dataset.py voc_dir test_ratio`
+`python split_dataset.py [--random_state RANDOM_STATE] voc_dir test_ratio`
 
-- voc_dir: VOC format dataset directory
-- test_ratio: test set ratio in whole dataset
+- `voc_dir`：VOC数据集文件夹
+- `test_ratio`：测试集比例
+- `RANDOM_STATE`：随机数种子
 
-this automatically generate train.txt and test.txt
-
-### step4: convert voc style datasets to coco style datasets
-
-`python voc_xml2coco_json.py imgset_file anno_dir json_file `
-
-- imgset_file: image set file path. (Use train.txt or test.txt generated last step)
-- anno_dir: directory contains voc dataset xml format annotations. (usually in VOC/Annotations)
-- json_file: output file path. COCO style json file.
-
-change the parameters to get coco format train set and test set.
+训练集和测试集文件在`ImageSets/Main`文件夹下。

@@ -20,7 +20,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 # build a chinese-english label convert dict
-(cn2ens, en2cns) = en_cn_dict_build("瑕疵中英文-Dict.txt")
+(cn2ens, en2cns) = en_cn_dict_build("label_dict.txt")
 
 # 多标签缺陷图像
 src_dir = Path("E:/Documents/Datasets/AluminiumClassification/select_defect")

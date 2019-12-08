@@ -1,4 +1,4 @@
-
+# coding=utf-8
 
 # 自定义标签转换，例如将中文便签转换为英文标签。
 def label_name_convert_dict_build(dict_file):
