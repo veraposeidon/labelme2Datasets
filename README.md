@@ -25,27 +25,19 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
 
 ## 仓库中的代码文件
 
-- `labelme_json_to_dataset.py`: 演示如何将单个labelme标注的json文件转换为单张图像的数据集。
+- `labelme_json_to_dataset.py`：演示如何将单个labelme标注的json文件转换为单张图像的数据集。
 
   **用法**  `python labelme_json_to_dataset.py [-h] [-o OUT] json_file`
 
   **举例**  `python labelme_json_to_dataset.py test/test_single.json -o test/test_single`
 
-- `bbox_labelme2voc.py`: 批量处理labelme标注的json文件，转换成VOC格式的数据集。
+- `bbox_labelme2voc.py`：批量处理labelme标注的json文件，转换成VOC格式的数据集。
 
-  **用法** `python bbox_labelme2voc.py [-h] --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
-
-  **举例** `python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/label_dict.txt test/test_jsons test/test_voc`
-
-- `split_dataset.py`：将VOC数据集中的样本按照比例，分割成训练集和测试集，并保存在`ImageSets/Main`文件夹下。
+- `split_dataset.py`：将VOC数据集中的样本按照比例，分割成训练集和测试集。
   
-  **用法** `python split_dataset.py [-h] [--random_state RANDOM_STATE] voc_dir test_ratio`
+- `voc_xml2coco_json.py`：将VOC数据集转换为COCO数据集。
   
-  **举例** `python split_dataset.py test/test_voc 0.35`
-
 - `utils.py`: 内置一些简单的转换函数。
-
-- voc_xml2coco_json.py：convert voc format dataset to coco format dataset, which is a json file.
 
 ## 安装
 
@@ -82,6 +74,8 @@ https://github.com/wkentaro/labelme/tree/master/examples
 
 ### 步骤二：转换为VOC风格的数据集
 
+**用法：**
+
 `python bbox_labelme2voc.py --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
 
 - `LABELS`：`label_names.txt`
@@ -89,12 +83,40 @@ https://github.com/wkentaro/labelme/tree/master/examples
 - `input_dir `：json标注文件所在文件夹
 - `output_dir`：VOC数据集文件夹
 
+**举例：** 
+
+`python bbox_labelme2voc.py --labels test/label_names.txt label_dict test/label_dict.txt test/test_jsons test/test_voc`
+
 ### 步骤三：分割训练集和测试集
+
+**用法：**
 
 `python split_dataset.py [--random_state RANDOM_STATE] voc_dir test_ratio`
 
-- `voc_dir`：VOC数据集文件夹
+- `voc_dir`：VOC数据集根目录，脚本创建
 - `test_ratio`：测试集比例
 - `RANDOM_STATE`：随机数种子
 
 训练集和测试集文件在`ImageSets/Main`文件夹下。
+
+**举例：** 
+
+`python split_dataset.py test/test_voc 0.35`
+
+### 步骤四：将VOC数据集转换为COCO数据集
+
+**用法：**
+
+`python voc_xml2coco_json.py voc_dir voc_split coco_dir anno_file`
+
+- `voc_dir `：VOC数据集根目录
+- `voc_split`：训练集或测试集文件名称，例如train或test
+- `coco_dir`：COCO数据集根目录，脚本创建
+- `anno_file`：与训练集或测试集对应的COCO数据集Json标注文件，保存在`coco_dir/annotations`文件夹下。
+
+**举例：**
+
+`python voc_xml2coco_json.py test/test_voc train test/test_coco train.json`
+
+
+

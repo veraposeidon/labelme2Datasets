@@ -82,9 +82,10 @@ def main():
             data = json.load(f)
 
         # regex: get image name
-        # base = osp.splitext(osp.basename(label_file))[0]
         filename = osp.splitext(osp.basename(label_file))[0]
-        base = pattern.findall(filename)[0]     # TODO: you can change it here: design a method for sample name
+        base = pattern.findall(filename)[0]  # TODO: you can change it here: design a method for sample name,
+        # TODO: or just use file name.
+        # base = osp.splitext(osp.basename(label_file))[0]
 
         # src image file
         out_img_file = osp.join(
@@ -100,7 +101,7 @@ def main():
             args.output_dir, 'AnnotationsVisualization', base + '_viz.jpg')
 
         # save source image
-        imageData = data.get('imageData')   # labelme annotated file contains source image data(serialized)
+        imageData = data.get('imageData')  # labelme annotated file contains source image data(serialized)
         if imageData:
             img = utils.img_b64_to_arr(imageData)
         else:
@@ -134,11 +135,11 @@ def main():
         labels = []
         for shape in data['shapes']:
             # TODO: change it for annotation shape type, some use points, some use rectangle. Here shows the points one.
-            class_name = shape['label']     # object name in json file
+            class_name = shape['label']  # object name in json file
             if args.label_dict is not None:
                 class_name = fst2snd_dict[class_name]
 
-            class_id = class_names.index(class_name)    # convert to class id
+            class_id = class_names.index(class_name)  # convert to class id
 
             # box info from annotated points
             xmin = shape['points'][0][0]
@@ -154,7 +155,7 @@ def main():
             labels.append(class_id)
 
             xml.append(
-                maker.object(   # object info
+                maker.object(  # object info
                     maker.name(class_name),  # label name
                     maker.pose(""),  # pose info, doesn't matter
                     maker.truncated("0"),  # truncated info, doesn't matter
