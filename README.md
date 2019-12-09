@@ -37,6 +37,8 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
   
 - `voc_xml2coco_json.py`：将VOC数据集转换为COCO数据集。
   
+- `segmentation_labelme2voc.py`：将labelme标注的json文件转换为VOC文件下下的语义分割标注文件。三种类型，`.npy`，`.png`和可视化图像。
+  
 - `utils.py`: 内置一些简单的转换函数。
 
 ## 安装
@@ -118,5 +120,16 @@ https://github.com/wkentaro/labelme/tree/master/examples
 
 `python voc_xml2coco_json.py test/test_voc train test/test_coco train.json`
 
+### 自选步骤：Labelme文件转换为语义分割标注数据集
 
+**用法：** 
 
+`python segmentation_labelme2voc.py seg_labels_file jsons_dir voc_dir `
+
+- `seg_labels_file `：与标注对应的标签文件
+- `jsons_dir`：包含标注文件的文件夹
+- `voc_dir`：目标文件夹
+
+**举例：**
+
+`python segmentation_labelme2voc.py test/label_names.txt test/test_jsons test/test_voc`
