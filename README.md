@@ -39,6 +39,8 @@ PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形
   
 - `segmentation_labelme2voc.py`：将labelme标注的json文件转换为VOC文件下下的语义分割标注文件。三种类型，`.npy`，`.png`和可视化图像。
   
+- `voc_category_statics_and_smiple_oversampling.py`：统计VOC数据集的标注数目，并进行简单的过采样处理。**过采样的方法有点简单的，可以用一些过采样算法替代。**
+  
 - `utils.py`: 内置一些简单的转换函数。
 
 ## 安装
@@ -133,3 +135,13 @@ https://github.com/wkentaro/labelme/tree/master/examples
 **举例：**
 
 `python segmentation_labelme2voc.py test/label_names.txt test/test_jsons test/test_voc`
+
+### 自选步骤：统计VOC数据集，并进行简单过采样处理
+
+**用法：** 
+
+`python voc_category_statics_and_smiple_oversampling.py [--save_name SAVE_NAME] voc_dir set `
+
+- `voc_dir`：VOC数据集根目录
+- `set`：数据集名字，比如train，在`voc_dir/ImageSets/Main`文件夹下
+- `SAVE_NAME`：过采样后的数据集保存文件。将保存在`voc_dir/ImageSets/Main`文件夹下
