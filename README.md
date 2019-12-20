@@ -89,7 +89,7 @@ https://github.com/wkentaro/labelme/tree/master/examples
 
 **举例：** 
 
-`python bbox_labelme2voc.py --labels test/label_names.txt label_dict test/label_dict.txt test/test_jsons test/test_voc`
+`python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/label_dict.txt test/test_jsons test/test_voc`
 
 ### 步骤三：分割训练集和测试集
 
