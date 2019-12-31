@@ -1,0 +1,15 @@
+<annotation>
+  <folder></folder>
+  <filename>20180928115538_640_480_0.jpg</filename>
+  <source>
+    <database></database>
+    <annotation></annotation>
+    <image></image>
+  </source>
+  <size>
+    <height>479</height>
+    <width>639</width>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+</annotation>
