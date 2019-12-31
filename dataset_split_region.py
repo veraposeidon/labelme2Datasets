@@ -21,6 +21,10 @@ import numpy as np
 import progressbar
 import labelme
 from labelme.utils import shape_to_mask
+import logging
+
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT)
 
 class_names = []
 
@@ -63,7 +67,8 @@ def main():
     if not osp.exists(set_file):
         print('directory not exists:', set_file)
         sys.exit(1)
-    new_set_file = osp.join(args.voc_dir, 'ImageSets', 'Main', args.voc_split + '_' + args.width + '_' + args.height + '.txt')
+    new_set_file = osp.join(args.voc_dir, 'ImageSets', 'Main',
+                            args.voc_split + '_' + args.width + '_' + args.height + '.txt')
 
     # read origin set
     anno_list = list()
@@ -87,7 +92,6 @@ def main():
     new_set_list = []
     # process every annotation xml
     for i in progressbar.progressbar(range(len(anno_list))):
-        print()
         file = anno_list[i]
         if not osp.exists(file):
             print("file not exists", file)
@@ -132,14 +136,14 @@ def main():
 
                 # 裁剪原图和保存
                 if data is not None:
-                    region_img = data.crop((x, y, x+width-1, y+height-1))
+                    region_img = data.crop((x, y, x + width - 1, y + height - 1))
                     region['img_data'] = region_img  # PIL image
                     # region_img.save(osp.join(args.voc_dir, 'JPEGImages', region['file_name']))
 
                 # 裁剪分割图和保存
                 if seg_data is not None:
                     region['seg_file'] = region['base'] + '.png'  # with part id
-                    region_seg = seg_data.crop((x, y, x+width-1, y+height-1))
+                    region_seg = seg_data.crop((x, y, x + width - 1, y + height - 1))
                     region['seg_data'] = region_seg
                     # region_seg.save(osp.join(args.voc_dir, 'SegmentationClassPNG', region['seg_file']))
 
@@ -160,10 +164,13 @@ def main():
                 obj_ymin = int(obj["bndbox"]["ymin"])
                 obj_xmax = int(obj["bndbox"]["xmax"])
                 obj_ymax = int(obj["bndbox"]["ymax"])
+                # correct wrong box
+                obj_xmax = min(obj_xmax, image['width'] - 1)
+                obj_ymax = min(obj_ymax, image['height'] - 1)
 
                 # check valid
                 if not check_size(obj_xmin, obj_ymin, obj_xmax, obj_ymax, image['width'], image['height']):
-                    print("ERROR", file)
+                    logging.error("ERROR SOURCE", file)
                     continue
 
                 # iterate every anno
@@ -191,15 +198,15 @@ def main():
 
                     # check valid
                     if not check_size(anno_xmin, anno_ymin, anno_xmax, anno_ymax, region['width'], region['height']):
-                        print("ERROR", file, img_xmin,img_ymin,img_xmax,img_ymax, obj_xmin, obj_ymin ,obj_xmax, obj_ymax)
+                        logging.error("ERROR REGION", file, img_xmin, img_ymin, img_xmax, img_ymax, obj_xmin, obj_ymin,
+                                      obj_xmax, obj_ymax)
                         continue
 
                     # append to region objects
                     region['objects'].append({'name': name, 'bndbox': (anno_xmin, anno_ymin, anno_xmax, anno_ymax)})
 
             # save region information to xml after process all objects in origin image
-            for j in progressbar.progressbar(range(len(regions))):
-                region = regions[j]
+            for region in regions:
                 save_voc_annotation(args.voc_dir, region)
                 new_set_list.append(region['base'])
     with open(new_set_file, 'w', encoding='UTF-8') as f:
@@ -329,7 +336,6 @@ def save_voc_annotation(voc_dir, region):
     if region['seg_data'] is not None:
         out_png_file = osp.join(voc_dir, 'SegmentationClassPNG', region['base'] + '.png')
         region['seg_data'].save(out_png_file)
-
 
 
 def shapes_to_label(img_shape, shapes, label_name_to_value):
