@@ -1,25 +1,14 @@
 # coding=utf-8
-"""
-切分，并
-"""
 from __future__ import print_function
 
 import argparse
-import os
 import os.path as osp
-
-import labelme
-from labelme.utils import shape_to_mask
 import xmltodict
-import json
 from collections import OrderedDict
 import sys
-import shutil
 import PIL
 from PIL import Image
 from pathlib import Path
-import numpy as np
-import progressbar
 
 try:
     import lxml.builder
@@ -27,6 +16,11 @@ try:
 except ImportError:
     print('Please install lxml:\n\n    pip install lxml\n')
     sys.exit(1)
+
+import numpy as np
+import progressbar
+import labelme
+from labelme.utils import shape_to_mask
 
 class_names = []
 
@@ -212,7 +206,6 @@ def main():
         f.writelines('\n'.join(tuple(new_set_list)))
 
 
-
 def check_size(xmin, ymin, xmax, ymax, width, height):
     if xmin >= xmax:
         return False
@@ -225,7 +218,7 @@ def check_size(xmin, ymin, xmax, ymax, width, height):
     return True
 
 
-def save_voc_annotation(voc_dir: str, region: dict) -> None:
+def save_voc_annotation(voc_dir, region):
     """
     save region part to xml, reference: bbox_labelme2voc.py
     :param voc_dir:
