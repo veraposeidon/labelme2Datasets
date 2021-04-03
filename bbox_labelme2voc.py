@@ -144,8 +144,8 @@ def main():
             # box info from annotated points
             xmin = shape['points'][0][0]
             ymin = shape['points'][0][1]
-            xmax = shape['points'][2][0]
-            ymax = shape['points'][2][1]
+            xmax = shape['points'][1][0]
+            ymax = shape['points'][1][1]
 
             # swap if min is larger than max.
             xmin, xmax = sorted([xmin, xmax])

@@ -104,10 +104,10 @@ def main():
                         # annotation["segmentation"] = []
                         annotation["iscrowd"] = 0
                         annotation["image_id"] = image_id
-                        x = int(obj["bndbox"]["xmin"])
-                        y = int(obj["bndbox"]["ymin"])
-                        w = int(obj["bndbox"]["xmax"]) - x + 1
-                        h = int(obj["bndbox"]["ymax"]) - y + 1
+                        x = int(float(obj["bndbox"]["xmin"]))
+                        y = int(float(obj["bndbox"]["ymin"]))
+                        w = int(float(obj["bndbox"]["xmax"])) - x + 1
+                        h = int(float(obj["bndbox"]["ymax"])) - y + 1
                         annotation["bbox"] = [x, y, w, h]
                         annotation["area"] = float(w * h)
                         annotation["category_id"] = value["id"]
