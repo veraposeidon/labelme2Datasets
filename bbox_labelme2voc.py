@@ -139,13 +139,25 @@ def main():
             if args.label_dict is not None:
                 class_name = fst2snd_dict[class_name]
 
+
+            # rabbit dataset rectify.
+            print(class_name)
+            if class_name == 'borad':
+                class_name = 'board'
+            elif class_name == 'font right paw':
+                class_name = 'front right paw'
+            elif class_name == 'font left paw':
+                class_name = 'front left paw'
+
             class_id = class_names.index(class_name)  # convert to class id
+
+            print('ok')
 
             # box info from annotated points
             xmin = shape['points'][0][0]
             ymin = shape['points'][0][1]
-            xmax = shape['points'][2][0]
-            ymax = shape['points'][2][1]
+            xmax = shape['points'][1][0]
+            ymax = shape['points'][1][1]
 
             # swap if min is larger than max.
             xmin, xmax = sorted([xmin, xmax])
