@@ -8,6 +8,10 @@
 
 仓库中的脚本用于将Labelme标注的数据转换为PASCAL VOC格式或MS COCO格式的标准数据集，便于直接利用现有的训练框架进行训练。
 
+**使用须知:** 脚本写的其实并不复杂，有基础的同学可以过一下脚本的流程，确保在自己使用的标注数据或数据集上能正常使用，有需要调整的地方也可以自己调整下，可以省掉一些Debug的无用功夫。
+举例说明：
+1. https://github.com/veraposeidon/labelme2Datasets/blob/dd40483487ed8a59838dd7277eaff7ae0fc7a0cb/bbox_labelme2voc.py#L147 数据集不同，计算BBOX左上角和右下角的Points下标也不一定相同，需要确认下。
+
 ## 标注工具和常见的两种数据集格式
 
 Labelme是我用的标注工具，对图像进行多种类型的标注，可以直接得到`json`文件。GitHub地址如下：
