@@ -1,4 +1,10 @@
 # coding=utf-8
+#
+# convert single json file to single image dataset.
+# Json -> (src img, masked img, visualized img, label_names.txt)
+# usage：python labelme_json_to_dataset.py json_file -o output_directory
+#
+# reference: https://github.com/wkentaro/labelme/blob/master/labelme/cli/json_to_dataset.py
 
 import argparse
 import base64
@@ -7,20 +13,16 @@ import os
 import os.path as osp
 
 import PIL.Image
+
+from labelme.logger import logger
 from labelme import utils
 
 
-# 将单个labelme标注得到的json文件转换为单个图像的数据集
-
-# convert single json file to single image dataset.
-# Json -> (src img, masked img, visualized img, label_names.txt)
-# usage：python labelme_json_to_dataset.py json_file -o out_dir
-
-# reference: https://github.com/wkentaro/labelme/blob/master/labelme/cli/json_to_dataset.py
 def main():
-    print('This script is aimed to demonstrate how to convert the'
+    logger.warning('This script is aimed to demonstrate how to convert the'
           'JSON file to a single image dataset, and not to handle'
-          'multiple JSON files to generate a real-use dataset. \n\n')
+          'multiple JSON files to generate a real-use dataset. \n\n'
+     )
 
     parser = argparse.ArgumentParser()
     parser.add_argument('json_file')
