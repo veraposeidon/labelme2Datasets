@@ -227,7 +227,7 @@ def check_size(xmin, ymin, xmax, ymax, width, height):
 
 def save_voc_annotation(voc_dir, region):
     """
-    save region part to xml, reference: bbox_labelme2voc.py
+    save region part to xml, reference: labelme_bbox_json2voc.py
     :param voc_dir:
     :param region:
     :return:
