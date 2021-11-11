@@ -1,10 +1,12 @@
+"""
+brief: covert single json file to single image dataset.
+
+usage：python labelme_json_to_dataset.py json_file -o output_directory
+
+reference: https://github.com/wkentaro/labelme/blob/main/labelme/cli/json_to_dataset.py
+"""
+
 # coding=utf-8
-#
-# convert single json file to single image dataset.
-# Json -> (src img, masked img, visualized img, label_names.txt)
-# usage：python labelme_json_to_dataset.py json_file -o output_directory
-#
-# reference: https://github.com/wkentaro/labelme/blob/master/labelme/cli/json_to_dataset.py
 
 import argparse
 import base64
@@ -12,18 +14,88 @@ import json
 import os
 import os.path as osp
 
+import imgviz
 import PIL.Image
 
 from labelme.logger import logger
 from labelme import utils
 
 
-def main():
-    logger.warning('This script is aimed to demonstrate how to convert the'
-          'JSON file to a single image dataset, and not to handle'
-          'multiple JSON files to generate a real-use dataset. \n\n'
-     )
+def get_data_and_image(json_file):
+    """
+    get data and image from json file
+    :param json_file: json file
+    :return: data and image
+    """
+    with open(json_file, 'rb') as json_f:
+        data = json.load(json_f)
+        image_data = data.get('imageData')
+        if not image_data:
+            image_path = os.path.join(os.path.dirname(json_file), data['imagePath'])
+            with open(image_path, 'rb') as image_f:
+                image_data = image_f.read()
+                image_data = base64.b64encode(image_data).decode('utf-8')
+        img = utils.img_b64_to_arr(image_data)
 
+        return data, img
+
+
+def get_label_names(data, image):
+    """
+    get label names from data and image
+    :param data: data
+    :param image: image
+    :return: label names and lbl
+    """
+    label_name_to_value = {'_background_': 0}
+    for shape in sorted(data['shapes'], key=lambda x: x['label']):
+        label_name = shape['label']
+        if label_name in label_name_to_value:
+            pass
+        else:
+            label_value = len(label_name_to_value)
+            label_name_to_value[label_name] = label_value
+    lbl, _ = utils.shapes_to_label(image.shape, data['shapes'], label_name_to_value)
+
+    label_names = [None] * (max(label_name_to_value.values()) + 1)
+    for name, value in label_name_to_value.items():
+        label_names[value] = name
+
+    return label_names, lbl
+
+
+def save_image_and_label(image, lbl, output_dir, label_names):
+    """
+    save image and label to output_dir
+    :param image: image
+    :param lbl: label
+    :param output_dir: output directory
+    :param label_names: label names
+    :return:
+    """
+    PIL.Image.fromarray(image).save(osp.join(output_dir, 'img.png'))
+    utils.lblsave(osp.join(output_dir, 'label.png'), lbl)
+    lbl_viz = imgviz.label2rgb(lbl, imgviz.asgray(image), label_names=label_names, loc="rb")
+    PIL.Image.fromarray(lbl_viz).save(osp.join(output_dir, 'label_viz.png'))
+
+    with open(osp.join(output_dir, 'label_names.txt'), 'w', encoding="utf8") as label_f:
+        for lbl_name in label_names:
+            label_f.write(lbl_name + '\n')
+
+    logger.info("Saved to: %s" % output_dir)
+
+
+def main():
+    """ main """
+    logger.warning(
+        'This script is aimed to demonstrate how to convert the'
+        'JSON file to a single image dataset, and not to handle'
+        'multiple JSON files to generate a real-use dataset.'
+    )
+    logger.warning(
+        "It won't handle multiple JSON files to generate a "
+        "real-use dataset."
+    )
     parser = argparse.ArgumentParser()
     parser.add_argument('json_file')
     parser.add_argument('-o', '--out', default=None)
@@ -39,40 +111,11 @@ def main():
     if not osp.exists(out_dir):
         os.mkdir(out_dir)
 
-    data = json.load(open(json_file))
-    imageData = data.get('imageData')
+    (data, img) = get_data_and_image(json_file)
 
-    if not imageData:
-        imagePath = os.path.join(os.path.dirname(json_file), data['imagePath'])
-        with open(imagePath, 'rb') as f:
-            imageData = f.read()
-            imageData = base64.b64encode(imageData).decode('utf-8')
-    img = utils.img_b64_to_arr(imageData)
+    (label_names, lbl) = get_label_names(data, img)
 
-    label_name_to_value = {'_background_': 0}
-    for shape in sorted(data['shapes'], key=lambda x: x['label']):
-        label_name = shape['label']
-        if label_name in label_name_to_value:
-            label_value = label_name_to_value[label_name]
-        else:
-            label_value = len(label_name_to_value)
-            label_name_to_value[label_name] = label_value
-    lbl = utils.shapes_to_label(img.shape, data['shapes'], label_name_to_value)
-
-    label_names = [None] * (max(label_name_to_value.values()) + 1)
-    for name, value in label_name_to_value.items():
-        label_names[value] = name
-    lbl_viz = utils.draw_label(lbl, img, label_names)
-
-    PIL.Image.fromarray(img).save(osp.join(out_dir, 'img.png'))
-    utils.lblsave(osp.join(out_dir, 'label.png'), lbl)
-    PIL.Image.fromarray(lbl_viz).save(osp.join(out_dir, 'label_viz.png'))
-
-    with open(osp.join(out_dir, 'label_names.txt'), 'w') as f:
-        for lbl_name in label_names:
-            f.write(lbl_name + '\n')
-
-    print('Saved to: %s' % out_dir)
+    save_image_and_label(img, lbl, out_dir, label_names)
 
 
 if __name__ == '__main__':
