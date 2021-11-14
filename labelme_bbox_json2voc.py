@@ -137,7 +137,7 @@ def process_annotated_json(class_names, filename, output_dir, label_dict):
     # two list for visualization
     bboxes = []
     labels = []
-    # TODO: change it for annotation shape type, some use points, some use rectangle.
+    # MARK: change it for annotation shape type, some use points, some use rectangle.
     # Here shows the points one.
     for shape in label_file.shapes:
         box = get_bbox_boundaries(shape=shape)

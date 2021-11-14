@@ -19,18 +19,3 @@ def get_label_conversion_dict(dict_file):
             words = line.split(":")
             label_dict[words[0].strip()] = words[1].strip()
     return label_dict
-
-
-# 生成标签字典，用于生成COCO数据集时供查询
-def get_coco_category(labels_file):
-    print("build attr dict.")
-    attr_dict = dict()
-    attr_dict["categories"] = []
-    lbl_count = 0
-    with open(labels_file, "r", encoding='UTF-8') as f:
-        for line in f:
-            label = line.strip()
-            print(lbl_count, label)
-            attr_dict["categories"].append({"supercategory": "defect", "id": lbl_count, "name": label})
-            lbl_count += 1
-    return attr_dict

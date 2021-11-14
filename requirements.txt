@@ -1,0 +1,5 @@
+imgviz~=1.4.1
+pillow~=8.4.0
+labelme~=4.5.13
+lxml~=4.6.4
+progressbar~=2.5

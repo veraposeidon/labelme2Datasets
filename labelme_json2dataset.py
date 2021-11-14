@@ -82,7 +82,7 @@ def save_image_and_label(image, lbl, output_dir, label_names):
         for lbl_name in label_names:
             label_f.write(lbl_name + '\n')
 
-    logger.info("Saved to: %s" % output_dir)
+    logger.info(f"Saved to: {output_dir}")
 
 
 def main():
