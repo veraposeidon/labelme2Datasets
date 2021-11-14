@@ -90,26 +90,19 @@ def get_bbox_boundaries(shape):
     # be care of the difference between your dataset image Coordinate and labelme imgViz Coordinate.
 
     # return (xmin, ymin, xmax, ymax)
-
     return (ymin, xmin, ymax, xmax)
 
 
-def process_annotated_json(class_names, filename, output_dir, label_dict):
-    """translate to image and xml"""
-    # file nam base
-    base = get_base_name(filename)
-    # src image file
-    out_img_file = osp.join(output_dir, "JPEGImages", base + ".jpg")
-    # annotation xml file
-    out_xml_file = osp.join(output_dir, "Annotations", base + ".xml")
-    # visualize image file
-    out_viz_file = osp.join(output_dir, "AnnotationsVisualization", base + ".jpg")
-
-    label_file = labelme.LabelFile(filename=filename)
-
-    # save source image
+def get_xml_with_labelfile(label_file, base, label_dict, class_names):
+    """
+    get_xml_with_labelfile
+    @param label_file:
+    @param base:
+    @param label_dict:
+    @param class_names:
+    @return:
+    """
     img = labelme.utils.img_data_to_arr(label_file.imageData)
-    imgviz.io.imsave(out_img_file, img)
 
     # generate voc format annotation file
     maker = lxml.builder.ElementMaker()
@@ -149,8 +142,7 @@ def process_annotated_json(class_names, filename, output_dir, label_dict):
             class_name = label_dict[class_name]
         class_id = class_names.index(class_name)  # convert to class id
 
-        (xmin, ymin, xmax, ymax) = box
-        bboxes.append([xmin, ymin, xmax, ymax])
+        bboxes.append([box[0], box[1], box[2], box[3]])
         labels.append(class_id)
 
         xml.append(
@@ -166,14 +158,46 @@ def process_annotated_json(class_names, filename, output_dir, label_dict):
                 maker.difficult("0"),
                 # bbox(up-left corner and bottom-right corner points)
                 maker.bndbox(
-                    maker.xmin(str(xmin)),
-                    maker.ymin(str(ymin)),
-                    maker.xmax(str(xmax)),
-                    maker.ymax(str(ymax)),
+                    maker.xmin(str(box[0])),
+                    maker.ymin(str(box[1])),
+                    maker.xmax(str(box[2])),
+                    maker.ymax(str(box[3])),
                 ),
             )
         )
+    return (xml, bboxes, labels)
 
+
+def process_annotated_json(class_names, filename, output_dir, label_dict):
+    """translate to image and xml"""
+    # file nam base
+    base = get_base_name(filename)
+    # src image file
+    out_img_file = osp.join(output_dir, "JPEGImages", base + ".jpg")
+    # annotation xml file
+    out_xml_file = osp.join(output_dir, "Annotations", base + ".xml")
+    # viz image file
+    out_viz_file = osp.join(output_dir, "AnnotationsVisualization", base + ".jpg")
+
+    label_file = labelme.LabelFile(filename=filename)
+
+    # save source image
+    img = labelme.utils.img_data_to_arr(label_file.imageData)
+    imgviz.io.imsave(out_img_file, img)
+
+    # get xml
+    (xml, bboxes, labels) = get_xml_with_labelfile(label_file, base, label_dict, class_names)
+
+    # save visualized image
+    save_visualization_image(img, labels, bboxes, class_names, output_file=out_viz_file)
+
+    # save voc annotation to xml file
+    with open(out_xml_file, "wb") as out_f:
+        out_f.write(lxml.etree.tostring(xml, pretty_print=True))
+
+
+def save_visualization_image(img, labels, bboxes, class_names, output_file):
+    """save visualized image"""
     # caption for visualize drawing
     captions = [class_names[label] for label in labels]
     viz = imgviz.instances2rgb(
@@ -183,11 +207,7 @@ def process_annotated_json(class_names, filename, output_dir, label_dict):
         captions=captions,
         font_size=15,
     )
-    imgviz.io.imsave(out_viz_file, viz)
-
-    # save voc annotation to xml file
-    with open(out_xml_file, "wb") as out_f:
-        out_f.write(lxml.etree.tostring(xml, pretty_print=True))
+    imgviz.io.imsave(output_file, viz)
 
 
 def main():
