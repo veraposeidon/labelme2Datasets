@@ -75,13 +75,18 @@
 </details>
 
 
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Scripts in this repository are used to convert [labelme](https://github.com/wkentaro/labelme)-annotated jsons into standard datasets in [PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/) format or [MS COCO](https://cocodataset.org/#home) format.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
+Scripts are written in [Python](https://www.python.org/).
+
+Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/tree/main/examples) section of labelme. Then I add some features according my own dataset, like class name conversion, customise image name, etc.
+
+**Attention**: these scripts are not complicated, and if you have the basis of python, please go through the convert workflows, and ensure that it fits your datasets. There are some places I annotated `MARK`, which means pay attention to it, and you could customize it to fit your needs.
+
+**Customize**: these scripts are only for the conversion of data I currently have. If you want to convert datasets in other areas, like instance segmentation, segmantic segmentation, video annotation, etc. please take a look at the [examples](https://github.com/wkentaro/labelme/tree/main/examples) section in labelme.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -89,14 +94,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Python](https://www.python.org/)
+* [labelme](https://github.com/wkentaro/labelme)
+* [imgviz](https://github.com/wkentaro/imgviz)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -105,32 +105,25 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+1. gather the labelme-annotated jsons into a folder. In the next steps, we will refer to this folder as `labelme_jsons_dir`.
 
+2. prepare a text file to store class names in your dataset. named it `label_names.txt`. take a look at `test/label_names.txt` for an example.
+
+3. if need class name conversion, prepare a text file to store the conversion rules. named it `label_dict.txt`. take a look at `test/label_dict.txt` for an example.
 ### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+1. suggested to use virtualenv to install python packages.
+  
+    ```sh
+    conda create --name=labelme python=3.6
+    conda activate labelme
+    pip install -r requirements.txt
+    ```
+2. clone the repo.
+    ```sh
+    git clone git@github.com:veraposeidon/labelme2Datasets.git
+    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -139,9 +132,25 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+- convert a single json into dataset. (`labelme_json2dataset.py`)
+    ```sh
+    python labelme_json2dataset.py --json_file=test/test.json \
+      --output_dir=test/test_single_output
+    ```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+- convert a folder of jsons into voc-format dataset. (`labelme_bbox_json2voc.py`)
+  - without label conversion
+    ```sh
+    python labelme_bbox_json2voc.py --json_dir=test/test_jsons \
+      --output_dir=test/test_voc_output --labels test/label_names.txt
+    ```
+  - with label conversion
+    ```sh
+    python labelme_bbox_json2voc.py --json_dir=test/test_jsons \
+      --output_dir=test/test_voc_output \
+      --labels test/label_names.txt \
+      --label_dict test/label_dict.txt
+    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -150,12 +159,12 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] Feature 1
-- [] Feature 2
-- [] Feature 3
-    - [] Nested Feature
+- [ ] add all scripts with pylint passed
+- [ ] chinese and english readme
+- [ ] modify project architecture
+- [ ] publish as package
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/veraposeidon/labelme2Datasets/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -191,9 +200,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+veraposeidon - veraposeidon@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/veraposeidon/labelme2Datasets](https://github.com/veraposeidon/labelme2Datasets)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -202,9 +211,8 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* [labelme](https://github.com/wkentaro/labelme)
+* [labelme2coco](https://github.com/fcakyon/labelme2coco)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

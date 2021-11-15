@@ -165,7 +165,7 @@ def get_xml_with_labelfile(label_file, base, label_dict, class_names):
                 ),
             )
         )
-    return (xml, bboxes, labels)
+    return xml, bboxes, labels
 
 
 def process_annotated_json(class_names, filename, output_dir, label_dict):
@@ -214,8 +214,8 @@ def main():
     """main"""
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("input_dir", help="input annotated directory")
-    parser.add_argument("output_dir", help="output dataset directory")
+    parser.add_argument("--json_dir", help="input annotated directory")
+    parser.add_argument("--output_dir", help="output dataset directory")
     parser.add_argument("--labels", help="labels file", required=True)
     parser.add_argument("--label_dict", help="convert label with dict")
     args = parser.parse_args()
@@ -239,7 +239,7 @@ def main():
                                  label_dict=fst2snd_dict,
                                  out_class_names_file=osp.join(args.output_dir, "class_names.txt"))
 
-    label_file_list = glob.glob(osp.join(args.input_dir, "*.json"))
+    label_file_list = glob.glob(osp.join(args.json_dir, "*.json"))
     pbar = ProgressBar().start()
     for i, filename in enumerate(label_file_list):
         process_annotated_json(class_names=class_names,

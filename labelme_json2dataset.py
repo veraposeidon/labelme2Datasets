@@ -14,11 +14,10 @@ import json
 import os
 import os.path as osp
 
-import imgviz
 import PIL.Image
-
-from labelme.logger import logger
+import imgviz
 from labelme import utils
+from labelme.logger import logger
 
 
 def get_data_and_image(json_file):
@@ -97,17 +96,17 @@ def main():
         "real-use dataset."
     )
     parser = argparse.ArgumentParser()
-    parser.add_argument('json_file')
-    parser.add_argument('-o', '--out', default=None)
+    parser.add_argument('--json_file')
+    parser.add_argument('--output_dir', default=None)
     args = parser.parse_args()
 
     json_file = args.json_file
 
-    if args.out is None:
+    if args.output_dir is None:
         out_dir = osp.basename(json_file).replace('.', '_')
         out_dir = osp.join(osp.dirname(json_file), out_dir)
     else:
-        out_dir = args.out
+        out_dir = args.output_dir
     if not osp.exists(out_dir):
         os.mkdir(out_dir)
 
