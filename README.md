@@ -1,151 +1,211 @@
-<img src="logo.png" width="200" >
-
-# 数据集转换脚本（工具向）
-
-**News:** 最近开始论文实验，需要重新整理一下数据集，顺便整理一下这个代码仓库。
-
-## 简介
-
-仓库中的脚本用于将Labelme标注的数据转换为PASCAL VOC格式或MS COCO格式的标准数据集，便于直接利用现有的训练框架进行训练。
-
-**使用须知:** 脚本写的其实并不复杂，有基础的同学可以过一下脚本的流程，确保在自己使用的标注数据或数据集上能正常使用，有需要调整的地方也可以自己调整下，可以省掉一些Debug的无用功夫。
-举例说明：
-1. https://github.com/veraposeidon/labelme2Datasets/blob/dd40483487ed8a59838dd7277eaff7ae0fc7a0cb/bbox_labelme2voc.py#L147 数据集不同，计算BBOX左上角和右下角的Points下标也不一定相同，需要确认下。
-
-## 标注工具和常见的两种数据集格式
-
-Labelme是我用的标注工具，对图像进行多种类型的标注，可以直接得到`json`文件。GitHub地址如下：
-
-[labelme: Image Polygonal Annotation with Python](https://github.com/wkentaro/labelme)
-
-PASCAL-VOC和MS-COCO是两个大型的开源数据集，其数据集的标注形式成为了通用的标注方式，常见的视觉模型的训练框架都支持这两种格式的读取，将自己的数据集转换为这两种标注方式，可以避免修改读取数据的代码。
-
-两种数据集和标注格式的介绍：
-
-[目标检测数据集PASCAL VOC简介](https://arleyzhang.github.io/articles/1dc20586/)
-
-[目标检测数据集MSCOCO简介](https://arleyzhang.github.io/articles/e5b86f16/)
+<div id="top"></div>
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
 
-## 仓库中的代码文件
 
-- `labelme_json_to_dataset.py`：演示如何将单个labelme标注的json文件转换为单张图像的数据集。
+<!-- PROJECT LOGO -->
+<br />
 
-  **用法**  `python labelme_json_to_dataset.py [-h] [-o OUT] json_file`
+<div align="center">
+  <a href="https://github.com/github_username/repo_name">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-  **举例**  `python labelme_json_to_dataset.py test/test_single.json -o test/test_single`
+<h3 align="center">project_title</h3>
 
-- `bbox_labelme2voc.py`：批量处理labelme标注的json文件，转换成VOC格式的数据集。
+  <p align="center">
+    project_description
+    <br />
+    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+  </p>
+</div>
 
-- `split_dataset.py`：将VOC数据集中的样本按照比例，分割成训练集和测试集。
-  
-- `voc_xml2coco_json.py`：将VOC数据集转换为COCO数据集。
-  
-- `segmentation_labelme2voc.py`：将labelme标注的json文件转换为VOC文件下下的语义分割标注文件。三种类型，`.npy`，`.png`和可视化图像。
-  
-- `voc_category_statics_and_smiple_oversampling.py`：统计VOC数据集的标注数目，并进行简单的过采样处理。**过采样的方法有点简单的，可以用一些过采样算法替代。**
-  
-- `utils.py`: 内置一些简单的转换函数。
 
-## 安装
 
-[labelme](https://github.com/wkentaro/labelme): 
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-```bash
-# python3
-conda create --name=labelme python=3.6
-conda activate labelme
-conda install labelme
-```
 
-其他工具：
-```bash
-conda install progressbar2    # 进度条
-conda install scikit-learn  # 用于分割数据集 
-conda install xmltodict	
-conda install lxml
-```
 
-## 拓展
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-仓库中的脚本只针对目前本人已有数据的转换，如果有实例分割、语义分割或视频标注等数据，可以参考labelme提供的示例代码进行修改，示例代码演示了这类标注文件如何转换成VOC格式数据集：
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-https://github.com/wkentaro/labelme/tree/master/examples
+Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
 
-## 使用流程
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### 步骤一：使用Labelme标注数据集
 
-- 标注得到一批json文件
-- 准备好`label_names.txt`，包含数据集的目标标签，可参考`test/label_names.txt`
-- 如果有需要进行标签名称转换的，准备好`label_dict.txt `，可参考`test/label_dict.txt`
 
-### 步骤二：转换为VOC风格的数据集
+### Built With
 
-**用法：**
+* [Next.js](https://nextjs.org/)
+* [React.js](https://reactjs.org/)
+* [Vue.js](https://vuejs.org/)
+* [Angular](https://angular.io/)
+* [Svelte](https://svelte.dev/)
+* [Laravel](https://laravel.com)
+* [Bootstrap](https://getbootstrap.com)
+* [JQuery](https://jquery.com)
 
-`python bbox_labelme2voc.py --labels LABELS [--label_dict LABEL_DICT] input_dir output_dir `
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-- `LABELS`：`label_names.txt`
-- `LABEL_DICT`：`label_dict.txt`
-- `input_dir `：json标注文件所在文件夹
-- `output_dir`：VOC数据集文件夹
 
-**举例：** 
 
-`python bbox_labelme2voc.py --labels test/label_names.txt --label_dict test/label_dict.txt test/test_jsons test/test_voc`
+<!-- GETTING STARTED -->
+## Getting Started
 
-### 步骤三：分割训练集和测试集
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
 
-**用法：**
+### Prerequisites
 
-`python split_dataset.py [--random_state RANDOM_STATE] voc_dir test_ratio`
+This is an example of how to list things you need to use the software and how to install them.
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
 
-- `voc_dir`：VOC数据集根目录，脚本创建
-- `test_ratio`：测试集比例
-- `RANDOM_STATE`：随机数种子
+### Installation
 
-训练集和测试集文件在`ImageSets/Main`文件夹下。
+1. Get a free API Key at [https://example.com](https://example.com)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/github_username/repo_name.git
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Enter your API in `config.js`
+   ```js
+   const API_KEY = 'ENTER YOUR API';
+   ```
 
-**举例：** 
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-`python split_dataset.py test/test_voc 0.35`
 
-### 步骤四：将VOC数据集转换为COCO数据集
 
-**用法：**
+<!-- USAGE EXAMPLES -->
+## Usage
 
-`python voc_xml2coco_json.py voc_dir voc_split coco_dir anno_file`
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-- `voc_dir `：VOC数据集根目录
-- `voc_split`：训练集或测试集文件名称，例如train或test
-- `coco_dir`：COCO数据集根目录，脚本创建
-- `anno_file`：与训练集或测试集对应的COCO数据集Json标注文件，保存在`coco_dir/annotations`文件夹下。
+_For more examples, please refer to the [Documentation](https://example.com)_
 
-**举例：**
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-`python voc_xml2coco_json.py test/test_voc train test/test_coco train.json`
 
-### 自选步骤：Labelme文件转换为语义分割标注数据集
 
-**用法：** 
+<!-- ROADMAP -->
+## Roadmap
 
-`python segmentation_labelme2voc.py seg_labels_file jsons_dir voc_dir `
+- [] Feature 1
+- [] Feature 2
+- [] Feature 3
+    - [] Nested Feature
 
-- `seg_labels_file `：与标注对应的标签文件
-- `jsons_dir`：包含标注文件的文件夹
-- `voc_dir`：目标文件夹
+See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
-**举例：**
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-`python segmentation_labelme2voc.py test/label_names.txt test/test_jsons test/test_voc`
 
-### 自选步骤：统计VOC数据集，并进行简单过采样处理
 
-**用法：** 
+<!-- CONTRIBUTING -->
+## Contributing
 
-`python voc_category_statics_and_smiple_oversampling.py [--save_name SAVE_NAME] voc_dir set `
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-- `voc_dir`：VOC数据集根目录
-- `set`：数据集名字，比如train，在`voc_dir/ImageSets/Main`文件夹下
-- `SAVE_NAME`：过采样后的数据集保存文件。将保存在`voc_dir/ImageSets/Main`文件夹下
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* []()
+* []()
+* []()
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/veraposeidon/labelme2Datasets.svg?style=for-the-badge
+[contributors-url]: https://github.com/veraposeidon/labelme2Datasets/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/veraposeidon/labelme2Datasets.svg?style=for-the-badge
+[forks-url]: https://github.com/veraposeidon/labelme2Datasets/network/members
+[stars-shield]: https://img.shields.io/github/stars/veraposeidon/labelme2Datasets.svg?style=for-the-badge
+[stars-url]: https://github.com/veraposeidon/labelme2Datasets/stargazers
+[issues-shield]: https://img.shields.io/github/issues/veraposeidon/labelme2Datasets.svg?style=for-the-badge
+[issues-url]: https://github.com/veraposeidon/labelme2Datasets/issues
+[license-shield]: https://img.shields.io/github/license/veraposeidon/labelme2Datasets.svg?style=for-the-badge
+[license-url]: https://github.com/veraposeidon/labelme2Datasets/blob/master/LICENSE
+[product-screenshot]: images/screenshot.png
