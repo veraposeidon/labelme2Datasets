@@ -241,6 +241,7 @@ def main():
 
     label_file_list = glob.glob(osp.join(args.json_dir, "*.json"))
     pbar = ProgressBar().start()
+    pbar.maxval = len(label_file_list)
     for i, filename in enumerate(label_file_list):
         process_annotated_json(class_names=class_names,
                                filename=filename,
