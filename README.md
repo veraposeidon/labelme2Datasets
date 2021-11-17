@@ -127,7 +127,14 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
     ```sh
     git clone git@github.com:veraposeidon/labelme2Datasets.git
     ```
-
+3. install the package
+   ```sh
+    cd labelme2Datasets
+    # (prefer this way!) install in editable mode, so that you can modify the package 
+    pip install -e .
+    # install in non-editable mode, so that you can use the package, but cannot modify it
+    #python setup.py install
+   ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -137,19 +144,19 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 
 - convert a single json into dataset. (`labelme_json2dataset.py`)
     ```sh
-    python labelme_json2dataset.py --json_file=data/test.json \
+    labelme_json2dataset --json_file=data/test.json \
       --output_dir=output/test_single_output
     ```
 
 - convert a folder of jsons into voc-format dataset. (`labelme_bbox_json2voc.py`)
   - without label conversion
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/test_jsons \
       --output_dir=output/test_voc_output --labels data/label_names.txt
     ```
   - with label conversion
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/test_jsons \
       --output_dir=output/test_voc_output \
       --labels data/label_names.txt \
       --label_dict data/label_dict.txt

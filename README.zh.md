@@ -127,7 +127,14 @@
     ```sh
     git clone git@github.com:veraposeidon/labelme2Datasets.git
     ```
-
+3. 本地安装
+   ```sh
+    cd labelme2Datasets
+    # （推荐）可编辑模式安装，即可以修改代码
+    pip install -e .
+    # 第二种安装方式，可以直接运行脚本，但是不能修改代码
+    #python setup.py install
+   ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -137,19 +144,19 @@
 
 - 转换单个 JSON 文件。 (`labelme_json2dataset.py`)
     ```sh
-    python labelme_json2dataset.py --json_file=data/test.json \
+    labelme_json2dataset --json_file=data/test.json \
       --output_dir=output/test_single_output
     ```
 
 - 转换 JSON 文件夹`labelme_jsons_dir` 到  VOC 格式的数据集。 (`labelme_bbox_json2voc.py`)
   - 需要标签转换
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/test_jsons \
       --output_dir=output/test_voc_output --labels data/label_names.txt
     ```
   - 不需要标签转换
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/test_jsons \
       --output_dir=output/test_voc_output \
       --labels data/label_names.txt \
       --label_dict data/label_dict.txt
