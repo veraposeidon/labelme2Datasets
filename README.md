@@ -17,7 +17,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Pylint][pylint-sheild]][pylint-url]
+[![Pylint](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml/badge.svg?branch=opensourceJourney)](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml)
 [![codebeat badge](https://codebeat.co/badges/5f99fcd3-c3a5-4154-91ca-4bb58b32bd53)](https://codebeat.co/projects/github-com-veraposeidon-labelme2datasets-opensourcejourney)
 [![english][en-sheild]][en-url]
 <br />
@@ -223,8 +223,6 @@ Project Link: [https://github.com/veraposeidon/labelme2Datasets](https://github.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[pylint-sheild]:https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml/badge.svg?branch=opensourceJourney
-[pylint-url]:https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml
 [en-sheild]:https://img.shields.io/badge/language-english-blue
 [en-url]:https://github.com/veraposeidon/labelme2Datasets//blob/opensourceJourney/README.md
 [contributors-shield]: https://img.shields.io/github/contributors/veraposeidon/labelme2Datasets.svg?style=for-the-badge
