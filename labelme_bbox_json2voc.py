@@ -90,55 +90,59 @@ def get_bbox_boundaries(shape):
     # be care of the difference between your dataset image Coordinate and labelme imgViz Coordinate.
 
     # return (xmin, ymin, xmax, ymax)
-    return (ymin, xmin, ymax, xmax)
+    return ymin, xmin, ymax, xmax
+
 
 def get_basic_maker_and_xml(shape, filename):
     """get basic maker"""
     maker = lxml.builder.ElementMaker()
+    maker_size = maker.size(
+            maker.height(str(shape[0])),
+            maker.width(str(shape[1])),
+            maker.depth(str(shape[2])),
+    )
+    maker_source = maker.source(
+            maker.database(""),
+            maker.annotation(""),
+            maker.image(""),
+    )
     xml = maker.annotation(
         # folder name
         maker.folder(""),
         # img path
         maker.filename(filename),
         # img source, ignore it
-        maker.source(
-            maker.database(""),
-            maker.annotation(""),
-            maker.image(""),
-        ),
+        maker_source,
         # image size(height, width and channel)
-        maker.size(
-            maker.height(str(shape[0])),
-            maker.width(str(shape[1])),
-            maker.depth(str(shape[2])),
-        ),
+        maker_size,
         # add category if it's for segmentation
         maker.segmented("0"),
     )
     return maker, xml
 
+
 def append_bbox_to_xml(maker, xml, box, class_name):
     """append bbox to xml"""
-    xml.append(
-        # object info
-        maker.object(
-            # label name
-            maker.name(class_name),
-            # pose info, ignore
-            maker.pose(""),
-            # truncated info, ignore
-            maker.truncated("0"),
-            # difficulty, ignore
-            maker.difficult("0"),
-            # bbox(up-left corner and bottom-right corner points)
-            maker.bndbox(
-                maker.xmin(str(box[0])),
-                maker.ymin(str(box[1])),
-                maker.xmax(str(box[2])),
-                maker.ymax(str(box[3])),
-            ),
-        )
+    # object info
+    maker_bndbox = maker.bndbox(
+                    maker.xmin(str(box[0])),
+                    maker.ymin(str(box[1])),
+                    maker.xmax(str(box[2])),
+                    maker.ymax(str(box[3])),
     )
+    bbox_obj = maker.object(
+                # label name
+                maker.name(class_name),
+                # pose info, ignore
+                maker.pose(""),
+                # truncated info, ignore
+                maker.truncated("0"),
+                # difficulty, ignore
+                maker.difficult("0"),
+                # bbox(up-left corner and bottom-right corner points)
+                maker_bndbox,
+    )
+    xml.append(bbox_obj)
     return xml
 
 
@@ -244,9 +248,7 @@ def main():
     label_file_list = glob.glob(osp.join(args.json_dir, "*.json"))
 
     # build label conversion dict
-    fst2snd_dict = {}
-    if args.label_dict:
-        fst2snd_dict = get_label_conversion_dict(args.label_dict)
+    fst2snd_dict = get_label_conversion_dict(args.label_dict)
 
     # get labels and save it to dataset dir
     class_names = process_labels(label_file=args.labels,
