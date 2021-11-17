@@ -92,6 +92,55 @@ def get_bbox_boundaries(shape):
     # return (xmin, ymin, xmax, ymax)
     return (ymin, xmin, ymax, xmax)
 
+def get_basic_maker_and_xml(shape, filename):
+    """get basic maker"""
+    maker = lxml.builder.ElementMaker()
+    xml = maker.annotation(
+        # folder name
+        maker.folder(""),
+        # img path
+        maker.filename(filename),
+        # img source, ignore it
+        maker.source(
+            maker.database(""),
+            maker.annotation(""),
+            maker.image(""),
+        ),
+        # image size(height, width and channel)
+        maker.size(
+            maker.height(str(shape[0])),
+            maker.width(str(shape[1])),
+            maker.depth(str(shape[2])),
+        ),
+        # add category if it's for segmentation
+        maker.segmented("0"),
+    )
+    return maker, xml
+
+def append_bbox_to_xml(maker, xml, box, class_name):
+    """append bbox to xml"""
+    xml.append(
+        # object info
+        maker.object(
+            # label name
+            maker.name(class_name),
+            # pose info, ignore
+            maker.pose(""),
+            # truncated info, ignore
+            maker.truncated("0"),
+            # difficulty, ignore
+            maker.difficult("0"),
+            # bbox(up-left corner and bottom-right corner points)
+            maker.bndbox(
+                maker.xmin(str(box[0])),
+                maker.ymin(str(box[1])),
+                maker.xmax(str(box[2])),
+                maker.ymax(str(box[3])),
+            ),
+        )
+    )
+    return xml
+
 
 def get_xml_with_labelfile(label_file, base, label_dict, class_names):
     """
@@ -105,27 +154,7 @@ def get_xml_with_labelfile(label_file, base, label_dict, class_names):
     img = labelme.utils.img_data_to_arr(label_file.imageData)
 
     # generate voc format annotation file
-    maker = lxml.builder.ElementMaker()
-    xml = maker.annotation(
-        # folder name
-        maker.folder(""),
-        # img path
-        maker.filename(base + ".jpg"),
-        # img source, ignore it
-        maker.source(
-            maker.database(""),
-            maker.annotation(""),
-            maker.image(""),
-        ),
-        # image size(height, width and channel)
-        maker.size(
-            maker.height(str(img.shape[0])),
-            maker.width(str(img.shape[1])),
-            maker.depth(str(img.shape[2])),
-        ),
-        # add category if it's for segmentation
-        maker.segmented("0"),
-    )
+    (maker, xml) = get_basic_maker_and_xml(img.shape, base + ".jpg")
 
     # two list for visualization
     bboxes = []
@@ -145,26 +174,8 @@ def get_xml_with_labelfile(label_file, base, label_dict, class_names):
         bboxes.append([box[0], box[1], box[2], box[3]])
         labels.append(class_id)
 
-        xml.append(
-            # object info
-            maker.object(
-                # label name
-                maker.name(class_name),
-                # pose info, ignore
-                maker.pose(""),
-                # truncated info, ignore
-                maker.truncated("0"),
-                # difficulty, ignore
-                maker.difficult("0"),
-                # bbox(up-left corner and bottom-right corner points)
-                maker.bndbox(
-                    maker.xmin(str(box[0])),
-                    maker.ymin(str(box[1])),
-                    maker.xmax(str(box[2])),
-                    maker.ymax(str(box[3])),
-                ),
-            )
-        )
+        xml = append_bbox_to_xml(maker, xml, box, class_name)
+
     return xml, bboxes, labels
 
 
@@ -229,6 +240,9 @@ def main():
     os.makedirs(osp.join(args.output_dir, "Annotations"))
     os.makedirs(osp.join(args.output_dir, "AnnotationsVisualization"))
     print("Creating dataset:", args.output_dir)
+
+    label_file_list = glob.glob(osp.join(args.json_dir, "*.json"))
+
     # build label conversion dict
     fst2snd_dict = {}
     if args.label_dict:
@@ -238,8 +252,7 @@ def main():
     class_names = process_labels(label_file=args.labels,
                                  label_dict=fst2snd_dict,
                                  out_class_names_file=osp.join(args.output_dir, "class_names.txt"))
-
-    label_file_list = glob.glob(osp.join(args.json_dir, "*.json"))
+    # 遍历处理
     pbar = ProgressBar().start()
     pbar.maxval = len(label_file_list)
     for i, filename in enumerate(label_file_list):
