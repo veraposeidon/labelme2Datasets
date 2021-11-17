@@ -18,6 +18,7 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 [![Pylint][pylint-sheild]][pylint-url]
+[![codebeat badge](https://codebeat.co/badges/5f99fcd3-c3a5-4154-91ca-4bb58b32bd53)](https://codebeat.co/projects/github-com-veraposeidon-labelme2datasets-opensourcejourney)
 [![english][en-sheild]][en-url]
 <br />
 [![Contributors][contributors-shield]][contributors-url]
