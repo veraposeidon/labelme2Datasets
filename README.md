@@ -137,22 +137,22 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 
 - convert a single json into dataset. (`labelme_json2dataset.py`)
     ```sh
-    python labelme_json2dataset.py --json_file=test/test.json \
-      --output_dir=test/test_single_output
+    python labelme_json2dataset.py --json_file=data/test.json \
+      --output_dir=output/test_single_output
     ```
 
 - convert a folder of jsons into voc-format dataset. (`labelme_bbox_json2voc.py`)
   - without label conversion
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=test/test_jsons \
-      --output_dir=test/test_voc_output --labels test/label_names.txt
+    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+      --output_dir=output/test_voc_output --labels data/label_names.txt
     ```
   - with label conversion
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=test/test_jsons \
-      --output_dir=test/test_voc_output \
-      --labels test/label_names.txt \
-      --label_dict test/label_dict.txt
+    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+      --output_dir=output/test_voc_output \
+      --labels data/label_names.txt \
+      --label_dict data/label_dict.txt
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

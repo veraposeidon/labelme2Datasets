@@ -137,22 +137,22 @@
 
 - 转换单个 JSON 文件。 (`labelme_json2dataset.py`)
     ```sh
-    python labelme_json2dataset.py --json_file=test/test.json \
-      --output_dir=test/test_single_output
+    python labelme_json2dataset.py --json_file=data/test.json \
+      --output_dir=output/test_single_output
     ```
 
 - 转换 JSON 文件夹`labelme_jsons_dir` 到  VOC 格式的数据集。 (`labelme_bbox_json2voc.py`)
   - 需要标签转换
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=test/test_jsons \
-      --output_dir=test/test_voc_output --labels test/label_names.txt
+    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+      --output_dir=output/test_voc_output --labels data/label_names.txt
     ```
   - 不需要标签转换
     ```sh
-    python labelme_bbox_json2voc.py --json_dir=test/test_jsons \
-      --output_dir=test/test_voc_output \
-      --labels test/label_names.txt \
-      --label_dict test/label_dict.txt
+    python labelme_bbox_json2voc.py --json_dir=data/test_jsons \
+      --output_dir=output/test_voc_output \
+      --labels data/label_names.txt \
+      --label_dict data/label_dict.txt
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
