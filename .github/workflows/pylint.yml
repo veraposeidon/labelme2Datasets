@@ -21,7 +21,7 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint `ls -R|grep .py$|xargs`
+        pylint ./**/*.py
     - name: Slack Notify
       uses: rtCamp/action-slack-notify@v2.2.0
       env:
