@@ -6,7 +6,7 @@ with open('README.md', encoding='utf-8') as readme_f:
 
 setup(
     name='labelme2datasets',
-    version='0.3',
+    version='0.0.1',
     description='python scripts to convert labelme-generated-jsons to voc/coco style datasets.',
     long_description=long_description,
     long_description_content_type="text/markdown",
