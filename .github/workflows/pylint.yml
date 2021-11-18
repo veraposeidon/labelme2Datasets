@@ -24,5 +24,8 @@ jobs:
         pylint ./**/*.py
     - name: Slack Notify
       uses: rtCamp/action-slack-notify@v2.2.0
+      if: always()
+      with:
+        status: ${{ job.status }}
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
