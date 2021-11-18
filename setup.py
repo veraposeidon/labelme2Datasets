@@ -1,7 +1,7 @@
 """setup.py for install this package"""
 from setuptools import setup, find_packages
 
-with open('README.md') as readme_f:
+with open('README.md', encoding='utf-8') as readme_f:
     long_description = readme_f.read()
 
 setup(
