@@ -28,4 +28,4 @@ jobs:
       with:
         status: ${{ job.status }}
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
