@@ -23,7 +23,7 @@ jobs:
       run: |
         pylint ./**/*.py
     - name: Slack Notify
-      uses: rtCamp/action-slack-notify@v2.2.0
+      uses: ravsamhq/notify-slack-action@v1
       if: always()
       with:
         status: ${{ job.status }}
