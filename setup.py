@@ -2,11 +2,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='labelme_to_datasets',
+    name='labelme2datasets',
     version='0.1',
     description='python scripts to convert labelme-generated-jsons to voc/coco style datasets.',
     author='veraposeidon',
-    packages=find_packages(include=['labelme_to_datasets', 'labelme_to_datasets.*']),
+    packages=find_packages(include=['labelme2datasets', 'labelme2datasets.*']),
     install_requires=[
         'imgviz~=1.4.1',
         'pillow~=8.4.0',
@@ -16,8 +16,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'labelme_json2dataset = labelme_to_datasets.labelme_json2dataset:main',
-            'labelme_bbox_json2voc = labelme_to_datasets.labelme_bbox_json2voc:main'
+            'labelme_json2dataset = labelme2datasets.labelme_json2dataset:main',
+            'labelme_bbox_json2voc = labelme2datasets.labelme_bbox_json2voc:main'
         ]
     },
 )
