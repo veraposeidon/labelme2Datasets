@@ -18,7 +18,7 @@ import sys
 from progressbar import ProgressBar
 import labelme
 import imgviz
-from labelmedatasets.utils import get_label_conversion_dict
+from labelme2datasets.utils import get_label_conversion_dict
 
 try:
     import lxml.builder
