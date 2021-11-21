@@ -17,6 +17,8 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+[![PyPI](https://img.shields.io/pypi/v/labelme2datasets.svg)](https://pypi.python.org/pypi/labelme2datasets)
+[![PythonVersion](https://img.shields.io/pypi/pyversions/labelme2datasets.svg)](https://pypi.org/project/labelme2datasets)
 [![Pylint](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml/badge.svg?branch=opensourceJourney)](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml)
 [![codebeat badge](https://codebeat.co/badges/5f99fcd3-c3a5-4154-91ca-4bb58b32bd53)](https://codebeat.co/projects/github-com-veraposeidon-labelme2datasets-opensourcejourney)
 [![chinese][zh-sheild]][zh-url]
