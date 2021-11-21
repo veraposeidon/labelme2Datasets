@@ -20,7 +20,7 @@
 [![PyPI](https://img.shields.io/pypi/v/labelme2datasets.svg)](https://pypi.python.org/pypi/labelme2datasets)
 [![PythonVersion](https://img.shields.io/pypi/pyversions/labelme2datasets.svg)](https://pypi.org/project/labelme2datasets)
 [![Pylint](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml/badge.svg)](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml)
-[![codebeat badge](https://codebeat.co/badges/649e20f4-598c-4a45-a835-dcdf92f8b352)](https://codebeat.co/projects/github-com-veraposeidon-labelme2datasets-master)
+[![codebeat badge](https://codebeat.co/badges/ab6b3bb6-213b-4a4f-ac55-277dd2840f28)](https://codebeat.co/projects/github-com-veraposeidon-labelme2datasets-main)
 [![english][en-sheild]][en-url]
 <br />
 [![Contributors][contributors-shield]][contributors-url]
