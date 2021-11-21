@@ -1,3 +1,0 @@
-__ignore__
-_background_
-metal
