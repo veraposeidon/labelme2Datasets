@@ -155,24 +155,34 @@ if the baseline in this project not work for your datasets, you can install in d
 ## Usage
 
 - convert a single json into dataset. (`labelme_json2dataset.py`)
-    ```sh
+    ```shell
     labelme_json2dataset --json_file=data/test.json \
       --output_dir=output/test_single_output
     ```
 
 - convert a folder of jsons into voc-format dataset. (`labelme_bbox_json2voc.py`)
   - without label conversion
-    ```sh
+    ```shell
     labelme_bbox_json2voc --json_dir=data/test_jsons \
       --output_dir=output/test_voc_output --labels data/label_names.txt
     ```
   - with label conversion
-    ```sh
+    ```shell
     labelme_bbox_json2voc --json_dir=data/test_jsons \
       --output_dir=output/test_voc_output \
       --labels data/label_names.txt \
       --label_dict data/label_dict.txt
     ```
+- splitting voc datasets into train set and test set. (`split_voc_datasets.py`)
+  ```shell
+    split_voc_datasets --voc_dir output/test_voc_output --test_ratio 0.3 --random_seed 42
+  ```
+  `train.txt` and `test.txt` should be generated in `voc_dir/ImageSets/Main/`.
+
+- turn voc format dataset into coco style dataset. (`voc2coco.py`)
+  ```shell
+    voc2coco --voc_dir output/test_voc_output --coco_dir output/test_coco_output
+  ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

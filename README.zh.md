@@ -171,10 +171,17 @@
       --labels data/label_names.txt \
       --label_dict data/label_dict.txt
     ```
+- 分割 VOC 数据的训练集和测试集。 (`split_voc_datasets.py`)
+  ```sh
+    split_voc_datasets --voc_dir output/test_voc_output --test_ratio 0.3 --random_seed 42
+  ```
+  `train.txt` 和 `test.txt` 会出现在 `voc_dir/ImageSets/Main/` 文件夹下。
 
+- 将 VOC 数据集转换为 COCO 数据集 (`voc2coco.py`)
+  ```shell
+    voc2coco --voc_dir output/test_voc_output --coco_dir output/test_coco_output
+  ```
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
