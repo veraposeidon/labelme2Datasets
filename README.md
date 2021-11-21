@@ -19,7 +19,7 @@
 -->
 [![PyPI](https://img.shields.io/pypi/v/labelme2datasets.svg)](https://pypi.python.org/pypi/labelme2datasets)
 [![PythonVersion](https://img.shields.io/pypi/pyversions/labelme2datasets.svg)](https://pypi.org/project/labelme2datasets)
-[![Pylint](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml/badge.svg?branch=opensourceJourney)](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml)
+[![Pylint](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml/badge.svg?branch=main)](https://github.com/veraposeidon/labelme2Datasets/actions/workflows/pylint.yml)
 [![codebeat badge](https://codebeat.co/badges/5f99fcd3-c3a5-4154-91ca-4bb58b32bd53)](https://codebeat.co/projects/github-com-veraposeidon-labelme2datasets-opensourcejourney)
 [![english][en-sheild]][en-url]
 <br />
@@ -51,7 +51,7 @@
 </div>
 
 
-[（中文 README）](https://github.com/veraposeidon/labelme2Datasets//blob/opensourceJourney/README.zh.md)
+[（中文 README）](https://github.com/veraposeidon/labelme2Datasets//blob/main/README.zh.md)
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -255,7 +255,7 @@ Project Link: [https://github.com/veraposeidon/labelme2Datasets](https://github.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [en-sheild]:https://img.shields.io/badge/language-english-blue
-[en-url]:https://github.com/veraposeidon/labelme2Datasets//blob/opensourceJourney/README.md
+[en-url]:https://github.com/veraposeidon/labelme2Datasets//blob/main/README.md
 [contributors-shield]: https://img.shields.io/github/contributors/veraposeidon/labelme2Datasets.svg?style=for-the-badge
 [contributors-url]: https://github.com/veraposeidon/labelme2Datasets/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/veraposeidon/labelme2Datasets.svg?style=for-the-badge
@@ -265,5 +265,5 @@ Project Link: [https://github.com/veraposeidon/labelme2Datasets](https://github.
 [issues-shield]: https://img.shields.io/github/issues/veraposeidon/labelme2Datasets.svg?style=for-the-badge
 [issues-url]: https://github.com/veraposeidon/labelme2Datasets/issues
 [license-shield]: https://img.shields.io/github/license/veraposeidon/labelme2Datasets.svg?style=for-the-badge
-[license-url]: https://github.com/veraposeidon/labelme2Datasets/blob/opensourceJourney/LICENSE
+[license-url]: https://github.com/veraposeidon/labelme2Datasets/blob/main/LICENSE
 [product-screenshot]: images/screenshot.png
