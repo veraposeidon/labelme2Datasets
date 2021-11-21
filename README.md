@@ -116,6 +116,8 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 
 3. if need class name conversion, prepare a text file to store the conversion rules. named it `label_dict.txt`. take a look at `test/label_dict.txt` for an example.
 ### Installation
+
+#### install in develop mode
 1. suggested to use virtualenv to install python packages.
   
     ```sh
@@ -135,6 +137,16 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
     # install in non-editable mode, so that you can use the package, but cannot modify it
     #python setup.py install
    ```
+   
+#### simply use PyPI
+
+I also published a PyPI package named [labelme2datasets](https://pypi.org/project/labelme2datasets/).
+
+you can just use `pip3 install labelme2datasets` to install this package.
+
+if the baseline in this project not work for your datasets, you can install in develop mode, and modify the code by your own.
+
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -170,9 +182,9 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 ## Roadmap
 
 - [ ] add all scripts with pylint passed
-- [ ] chinese and english readme
-- [ ] modify project architecture
-- [ ] publish as package
+- [x] chinese and english readme
+- [x] modify project architecture
+- [x] publish as package
 
 See the [open issues](https://github.com/veraposeidon/labelme2Datasets/issues) for a full list of proposed features (and known issues).
 

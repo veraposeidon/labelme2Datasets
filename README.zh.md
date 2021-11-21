@@ -116,6 +116,7 @@
 
 3. 如果有转换标签的需求（比如中文标签转为英文），准备一个文本，包含转换的规则，举个例子，命名为`label_dict.txt`。可以参考下项目里的 `test/label_dict.txt` 。
 ### Installation
+#### develop mode 安装
 1. 建议使用虚拟环境安装 Python Package。
   
     ```sh
@@ -135,6 +136,15 @@
     # 第二种安装方式，可以直接运行脚本，但是不能修改代码
     #python setup.py install
    ```
+   
+#### 直接使用 PyPI
+
+同时发布了一个 PyPI package，[labelme2datasets](https://pypi.org/project/labelme2datasets/)。
+
+可以直接使用 `pip3 install labelme2datasets` 进行安装。
+
+如果项目中的流程不适用于你的数据集，建议通过上述 develop mode 安装和修改代码。
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
