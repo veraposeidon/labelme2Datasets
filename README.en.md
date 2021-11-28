@@ -51,7 +51,7 @@
 </div>
 
 
-[（中文 README）](https://github.com/veraposeidon/labelme2Datasets//blob/main/README.zh.md)
+[（中文 README）](https://github.com/veraposeidon/labelme2Datasets//blob/main/README.md)
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -255,7 +255,7 @@ Project Link: [https://github.com/veraposeidon/labelme2Datasets](https://github.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [en-sheild]:https://img.shields.io/badge/language-english-blue
-[en-url]:https://github.com/veraposeidon/labelme2Datasets//blob/main/README.md
+[en-url]:https://github.com/veraposeidon/labelme2Datasets//blob/main/README.en.md
 [contributors-shield]: https://img.shields.io/github/contributors/veraposeidon/labelme2Datasets.svg?style=for-the-badge
 [contributors-url]: https://github.com/veraposeidon/labelme2Datasets/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/veraposeidon/labelme2Datasets.svg?style=for-the-badge
