@@ -51,7 +51,7 @@
 </div>
 
 
-[English README Available](https://github.com/veraposeidon/labelme2Datasets//blob/main/README.md)
+[English README Available](https://github.com/veraposeidon/labelme2Datasets//blob/main/README.en.md)
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -188,10 +188,10 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] 将所有的脚本都通过 Pylint
-- [ ] 中英文 README
-- [ ] 调整项目结构
-- [ ] 发布 Pypi 包
+- [x] 将所有的脚本都通过 Pylint
+- [x] 中英文 README
+- [x] 调整项目结构
+- [x] 发布 Pypi 包
 
 See the [open issues](https://github.com/veraposeidon/labelme2Datasets/issues) for a full list of proposed features (and known issues).
 
@@ -248,7 +248,7 @@ Project Link: [https://github.com/veraposeidon/labelme2Datasets](https://github.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [zh-sheild]:https://img.shields.io/badge/language-chinese-red
-[zh-url]:https://github.com/veraposeidon/labelme2Datasets//blob/main/README.zh.md
+[zh-url]:https://github.com/veraposeidon/labelme2Datasets//blob/main/README.md
 [contributors-shield]: https://img.shields.io/github/contributors/veraposeidon/labelme2Datasets.svg?style=for-the-badge
 [contributors-url]: https://github.com/veraposeidon/labelme2Datasets/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/veraposeidon/labelme2Datasets.svg?style=for-the-badge
