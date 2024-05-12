@@ -4,3 +4,6 @@ labelme~=5.4.1
 progressbar~=2.5
 scikit-learn~=1.4.2
 xmltodict~=0.13.0
+setuptools~=69.5.1
+pillow~=10.3.0
+lxml~=5.2.1

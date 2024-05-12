@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 brief: covert single json file to single image dataset.
 
@@ -5,8 +6,6 @@ usage：python labelme_json2dataset.py json_file -o output_directory
 
 reference: https://github.com/wkentaro/labelme/blob/main/labelme/cli/json_to_dataset.py
 """
-
-# coding=utf-8
 
 import argparse
 import base64
@@ -50,7 +49,7 @@ def get_label_names(data, image):
     for shape in sorted(data['shapes'], key=lambda x: x['label']):
         label_name = shape['label']
         if label_name in label_name_to_value:
-            pass
+            continue
         else:
             label_value = len(label_name_to_value)
             label_name_to_value[label_name] = label_value
@@ -85,15 +84,15 @@ def save_image_and_label(image, lbl, output_dir, label_names):
 
 
 def main():
-    """ main """
+    """ Main function. """
     logger.warning(
-        'This script is aimed to demonstrate how to convert the'
-        'JSON file to a single image dataset, and not to handle'
-        'multiple JSON files to generate a real-use dataset.'
+        'This script demonstrates how to convert a JSON file '
+        'into a single image dataset. However, it is not intended '
+        'to handle multiple JSON files for generating a real-world dataset.'
     )
     logger.warning(
-        "It won't handle multiple JSON files to generate a "
-        "real-use dataset."
+        "This script does not support processing multiple JSON files "
+        "to create a real-world dataset."
     )
     parser = argparse.ArgumentParser()
     parser.add_argument('--json_file')
@@ -102,11 +101,16 @@ def main():
 
     json_file = args.json_file
 
+    if json_file is None or not os.path.exists(json_file):
+        logger.error("JSON file is not provided or does not exist. -h for help.")
+        return
+
     if args.output_dir is None:
         out_dir = osp.basename(json_file).replace('.', '_')
-        out_dir = osp.join(osp.dirname(json_file), out_dir)
+        out_dir = osp.join(osp.dirname(json_file), str(out_dir))
     else:
         out_dir = args.output_dir
+
     if not osp.exists(out_dir):
         os.mkdir(out_dir)
 
