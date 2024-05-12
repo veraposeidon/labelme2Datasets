@@ -3,3 +3,4 @@ imgviz~=1.7.5
 labelme~=5.4.1
 progressbar~=2.5
 scikit-learn~=1.4.2
+xmltodict~=0.13.0

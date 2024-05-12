@@ -21,7 +21,7 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint ./**/*.py
+        pylint labelme2datasets/**
     - name: Slack Notify
       uses: ravsamhq/notify-slack-action@v1
       if: always()
