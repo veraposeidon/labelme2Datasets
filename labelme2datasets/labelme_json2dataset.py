@@ -50,9 +50,8 @@ def get_label_names(data, image):
         label_name = shape['label']
         if label_name in label_name_to_value:
             continue
-        else:
-            label_value = len(label_name_to_value)
-            label_name_to_value[label_name] = label_value
+        label_value = len(label_name_to_value)
+        label_name_to_value[label_name] = label_value
     lbl, _ = utils.shapes_to_label(image.shape, data['shapes'], label_name_to_value)
 
     label_names = [None] * (max(label_name_to_value.values()) + 1)
