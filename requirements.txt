@@ -2,5 +2,4 @@ beautifulsoup4~=4.12.3
 imgviz~=1.7.5
 labelme~=5.4.1
 progressbar~=2.5
-protobuf~=5.26.1
 scikit-learn~=1.4.2
