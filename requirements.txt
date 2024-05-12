@@ -30,7 +30,7 @@ progressbar==2.5
 protobuf==5.26.1
 pyparsing==3.1.2
 PyQt5==5.15.10
-PyQt5-Qt5==5.15.12
+PyQt5-Qt5==5.15.13
 PyQt5-sip==12.13.0
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
