@@ -1,10 +1,11 @@
+# coding=utf-8
 """
 some common functions.
 """
 
-# coding=utf-8
 
 import os.path as osp
+
 
 def get_label_conversion_dict(dict_file):
     """

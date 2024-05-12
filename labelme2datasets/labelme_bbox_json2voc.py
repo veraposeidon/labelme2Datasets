@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 desc: gather json files annotated by labelme into a dictionary,
     and use this script to generate a voc style dataset.
@@ -5,7 +6,6 @@ desc: gather json files annotated by labelme into a dictionary,
 reference: https://github.com/wkentaro/labelme/blob/main/examples/bbox_detection/labelme2voc.py
 """
 
-# coding=utf-8
 
 from __future__ import print_function
 
@@ -198,7 +198,7 @@ def process_annotated_json(class_names, filename, output_dir, label_dict):
 
     # save source image
     img = labelme.utils.img_data_to_arr(label_file.imageData)
-    imgviz.io.imsave(out_img_file, img)
+    imgviz.io.imsave(str(out_img_file), img)
 
     # get xml
     (xml, bboxes, labels) = get_xml_with_labelfile(label_file, base, label_dict, class_names)
@@ -215,12 +215,16 @@ def save_visualization_image(img, labels, bboxes, class_names, output_file):
     """save visualized image"""
     # caption for visualize drawing
     captions = [class_names[label] for label in labels]
+    # font can display chinese
+    # MARK: change font path if you need
+    font_path = "SimSun.ttf"
     viz = imgviz.instances2rgb(
         image=img,
         labels=labels,
         bboxes=bboxes,
         captions=captions,
-        font_size=15,
+        font_size=20,
+        font_path=font_path,
     )
     imgviz.io.imsave(output_file, viz)
 
