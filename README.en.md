@@ -123,7 +123,7 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 1. suggested to use virtualenv to install python packages.
   
     ```sh
-    conda create --name=labelme python=3.6
+    conda create --name=labelme python=3.9
     conda activate labelme
     pip install -r requirements.txt
     ```

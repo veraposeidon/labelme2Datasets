@@ -122,7 +122,7 @@
 1. 建议使用虚拟环境安装 Python Package。
   
     ```sh
-    conda create --name=labelme python=3.6
+    conda create --name=labelme python=3.9
     conda activate labelme
     pip install -r requirements.txt
     ```
