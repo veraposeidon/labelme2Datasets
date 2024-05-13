@@ -123,7 +123,7 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 1. suggested to use virtualenv to install python packages.
   
     ```sh
-    conda create --name=labelme python=3.6
+    conda create --name=labelme python=3.9
     conda activate labelme
     pip install -r requirements.txt
     ```
@@ -158,19 +158,19 @@ if the baseline in this project not work for your datasets, you can install in d
 
 - convert a single json into dataset. (`labelme_json2dataset.py`)
     ```shell
-    labelme_json2dataset --json_file=data/test.json \
+    labelme_json2dataset --json_file=data/sample.json \
       --output_dir=output/test_single_output
     ```
 
 - convert a folder of jsons into voc-format dataset. (`labelme_bbox_json2voc.py`)
   - without label conversion
     ```shell
-    labelme_bbox_json2voc --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/sample_jsons \
       --output_dir=output/test_voc_output --labels data/label_names.txt
     ```
   - with label conversion
     ```shell
-    labelme_bbox_json2voc --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/sample_jsons \
       --output_dir=output/test_voc_output \
       --labels data/label_names.txt \
       --label_dict data/label_dict.txt

@@ -4,10 +4,10 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.6", "3.8"]
+        python-version: ["3.9","3.10","3.11","3.12"]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -21,7 +21,7 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint ./**/*.py
+        pylint labelme2datasets/**
     - name: Slack Notify
       uses: ravsamhq/notify-slack-action@v1
       if: always()

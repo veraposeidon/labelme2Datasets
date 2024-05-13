@@ -1,5 +1,6 @@
-"""splitting voc format datasets into training set and test set"""
 # coding=utf-8
+"""splitting voc format datasets into training set and test set"""
+
 
 import argparse
 import sys

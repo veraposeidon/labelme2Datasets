@@ -1,5 +1,5 @@
+# coding=utf-8
 """turn voc format datasets into coco format datasets"""
-# coding = utf-8
 
 import argparse
 import sys

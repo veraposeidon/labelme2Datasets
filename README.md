@@ -122,7 +122,7 @@
 1. 建议使用虚拟环境安装 Python Package。
   
     ```sh
-    conda create --name=labelme python=3.6
+    conda create --name=labelme python=3.9
     conda activate labelme
     pip install -r requirements.txt
     ```
@@ -156,19 +156,19 @@
 
 - 转换单个 JSON 文件。 (`labelme_json2dataset.py`)
     ```sh
-    labelme_json2dataset --json_file=data/test.json \
+    labelme_json2dataset --json_file=data/sample.json \
       --output_dir=output/test_single_output
     ```
 
 - 转换 JSON 文件夹`labelme_jsons_dir` 到  VOC 格式的数据集。 (`labelme_bbox_json2voc.py`)
-  - 需要标签转换
-    ```sh
-    labelme_bbox_json2voc --json_dir=data/test_jsons \
-      --output_dir=output/test_voc_output --labels data/label_names.txt
-    ```
   - 不需要标签转换
     ```sh
-    labelme_bbox_json2voc --json_dir=data/test_jsons \
+    labelme_bbox_json2voc --json_dir=data/sample_jsons \
+      --output_dir=output/test_voc_output --labels data/label_names.txt
+    ```
+  - 需要标签转换
+    ```sh
+    labelme_bbox_json2voc --json_dir=data/sample_jsons \
       --output_dir=output/test_voc_output \
       --labels data/label_names.txt \
       --label_dict data/label_dict.txt

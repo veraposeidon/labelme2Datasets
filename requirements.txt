@@ -1,9 +1,9 @@
-imgviz~=1.4.1
-pillow~=8.4.0
-labelme~=4.5.13
-lxml~=4.6.4
+beautifulsoup4~=4.12.3
+imgviz~=1.7.5
+labelme~=5.4.1
 progressbar~=2.5
-setuptools~=58.0.4
-xmltodict~=0.12.0
-sklearn~=0.0
-scikit-learn~=0.24.2
+scikit-learn~=1.4.2
+xmltodict~=0.13.0
+setuptools~=69.5.1
+pillow~=10.3.0
+lxml~=5.2.1
