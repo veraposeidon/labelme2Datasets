@@ -26,7 +26,17 @@ setup(
     url="https://github.com/veraposeidon/labelme2Datasets",
     author='veraposeidon',
     packages=find_packages(include=['labelme2datasets', 'labelme2datasets.*']),
-    install_requires=get_install_requires(),
+    install_requires=[
+        'beautifulsoup4~=4.12.3',
+        'imgviz~=1.7.5',
+        'labelme~=5.4.1',
+        'progressbar~=2.5',
+        'scikit-learn~=1.4.2',
+        'xmltodict~=0.13.0',
+        'setuptools~=69.5.1',
+        'pillow~=10.3.0',
+        'lxml~=5.2.1'
+    ],
     entry_points={
         'console_scripts': [
             'labelme_json2dataset = labelme2datasets.labelme_json2dataset:main',
