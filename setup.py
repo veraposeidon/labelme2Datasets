@@ -26,6 +26,7 @@ setup(
     url="https://github.com/veraposeidon/labelme2Datasets",
     author='veraposeidon',
     packages=find_packages(include=['labelme2datasets', 'labelme2datasets.*']),
+    python_requires='>=3.10',
     install_requires=[
         'beautifulsoup4~=4.12.3',
         'imgviz~=1.7.5',
@@ -46,7 +47,10 @@ setup(
         ]
     },
     classifiers=[
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
