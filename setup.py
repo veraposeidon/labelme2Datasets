@@ -34,8 +34,8 @@ setup(
         'scikit-learn>=1.5.0',
         'xmltodict~=0.13.0',
         'setuptools>=78.1.1',
-        'pillow~=10.3.0',
-        'lxml~=5.2.1'
+        'pillow>=12.1.1',
+        'lxml>=6.1.0'
     ],
     entry_points={
         'console_scripts': [
