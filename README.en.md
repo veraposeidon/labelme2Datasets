@@ -120,10 +120,10 @@ Most of the scripts refer to the [examples](https://github.com/wkentaro/labelme/
 ### Installation
 
 #### install in develop mode
-1. suggested to use virtualenv to install python packages.
+1. suggested to use a Python 3.10 or newer virtualenv to install python packages.
   
     ```sh
-    conda create --name=labelme python=3.9
+    conda create --name=labelme python=3.10
     conda activate labelme
     pip install -r requirements.txt
     ```

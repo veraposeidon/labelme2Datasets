@@ -119,10 +119,10 @@
 3. 如果有转换标签的需求（比如中文标签转为英文），准备一个文本，包含转换的规则，举个例子，命名为`label_dict.txt`。可以参考下项目里的 `test/label_dict.txt` 。
 ### Installation
 #### develop mode 安装
-1. 建议使用虚拟环境安装 Python Package。
+1. 建议使用 Python 3.10 或更高版本的虚拟环境安装 Python Package。
   
     ```sh
-    conda create --name=labelme python=3.9
+    conda create --name=labelme python=3.10
     conda activate labelme
     pip install -r requirements.txt
     ```
